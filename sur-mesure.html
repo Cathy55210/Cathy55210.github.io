@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>Créations sur-mesure · Nacréa by Cathy</title>
-  <meta name="description" content="Bouquet en satin personnalisé, fleurs en chenille, bougie ou coffret à vos couleurs : décrivez votre idée, Cathy la crée à la main. Texte sur ruban, teintes au choix, toutes occasions.">
+  <title>Création sur-mesure · Nacréa by Cathy</title>
+  <meta name="description" content="Racontez votre idée : couleurs, occasion, budget, inspiration. Cathy imagine et crée à la main un bouquet en satin, des fleurs en chenille, une bougie ou un coffret qui vous ressemble.">
   <link rel="canonical" href="https://nacreabycathy.fr/sur-mesure.html">
-  <meta property="og:title" content="Créations sur-mesure · Nacréa by Cathy">
-  <meta property="og:description" content="Une couleur précise, un prénom sur le ruban, une occasion particulière : imaginez votre création, Cathy la fait à la main.">
+  <meta property="og:title" content="Création sur-mesure · Nacréa by Cathy">
+  <meta property="og:description" content="Votre idée, créée par Cathy. Quelques choix suffisent pour raconter ce que vous imaginez.">
   <meta property="og:image" content="https://nacreabycathy.fr/assets/ambiance-hero.webp">
   <meta property="og:url" content="https://nacreabycathy.fr/sur-mesure.html">
   <meta property="og:type" content="website">
@@ -40,36 +40,183 @@
 </header>
 <!-- /GEN:NAV -->
 
-<main class="page-simple">
-  <p class="eyebrow">Le sur-mesure</p>
-  <h1>Vous l'imaginez, Cathy le crée</h1>
-  <p class="intro">Chaque création de la boutique peut être adaptée, et tout ce qui n'y figure pas peut être inventé pour vous&nbsp;: il suffit de raconter votre idée.</p>
+<main class="page-simple page-smesure">
+  <p class="eyebrow">Création sur mesure</p>
+  <h1>Votre idée, créée par Cathy.</h1>
+  <p class="intro">Une couleur, une occasion, une personne ou simplement une envie&nbsp;? Racontez ce que vous imaginez : Cathy vous répond avec une proposition, un prix et un délai. Vous ne payez qu'une fois le projet validé ensemble.</p>
+  <p><a class="btn btn-primary" href="#formulaire">Commencer ma création</a></p>
 
-  <h2>Quelques pistes pour rêver</h2>
-  <div class="sm-idees">
-    <span>Un bouquet aux couleurs de sa personne préférée</span>
-    <span>Un prénom ou une date imprimés sur le ruban</span>
-    <span>Une rose lumineuse au cœur du bouquet</span>
-    <span>Un coffret bouquet + bougie assortis</span>
-    <span>Des fleurs aux couleurs du mariage</span>
-    <span>Une bougie au parfum de son enfance</span>
-  </div>
-
-  <h2>Comment ça se passe</h2>
+  <h2 id="process">Comment ça se passe</h2>
   <ol class="sm-etapes">
-    <li><b>1</b><span><strong>Vous imaginez.</strong> Une occasion, des couleurs, une idée même floue&nbsp;: tout point de départ est bon.</span></li>
-    <li><b>2</b><span><strong>Vous racontez.</strong> Envoyez votre idée en message, avec une photo d'inspiration si vous en avez une.</span></li>
-    <li><b>3</b><span><strong>Cathy vous propose.</strong> Créations possibles, teintes, dimensions et tarif&nbsp;: tout est validé ensemble avant de commencer.</span></li>
-    <li><b>4</b><span><strong>La création prend forme.</strong> Roulée, pliée, coulée à la main à l'atelier, en Meuse.</span></li>
-    <li><b>5</b><span><strong>Elle arrive jusqu'à vous.</strong> Remise en main propre ou envoi soigné, prête à être offerte.</span></li>
+    <li><b>1</b><span><strong>Vous racontez votre idée</strong> avec le petit questionnaire ci-dessous, même si elle est encore floue.</span></li>
+    <li><b>2</b><span><strong>Cathy étudie votre projet</strong> et vous répond avec une proposition : création, prix et délai.</span></li>
+    <li><b>3</b><span><strong>Vous validez ensemble</strong>, vous réglez, et la création prend forme à l'atelier.</span></li>
+    <li><b>4</b><span><strong>Elle arrive jusqu'à vous</strong> : remise en main propre ou envoi soigné, prête à être offerte.</span></li>
   </ol>
 
-  <h2>Racontez votre idée</h2>
-  <p class="intro">Le plus simple aujourd'hui&nbsp;: un message direct sur Instagram ou Facebook. Décrivez l'occasion, les couleurs souhaitées et la date à laquelle il vous la faut.</p>
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="https://www.instagram.com/catcandle55" target="_blank" rel="noopener">Écrire sur Instagram</a>
-    <a class="btn btn-ghost" href="https://www.facebook.com/share/1Giaos61ck/" target="_blank" rel="noopener">Écrire sur Facebook</a>
-  </div>
+  <!-- ========================================
+       FORMULAIRE MULTI-ÉTAPES
+       ======================================== -->
+  <section id="formulaire" class="wizard">
+    <div id="base-info" class="base-info" hidden>
+      <p>Votre point de départ : <strong id="base-nom"></strong>. Les créations étant faites main, certains détails peuvent varier selon les matières disponibles.</p>
+    </div>
+
+    <div class="wprogress" aria-hidden="true">
+      <span class="wp-dot" data-dot="0"></span><span class="wp-dot" data-dot="1"></span><span class="wp-dot" data-dot="2"></span><span class="wp-dot" data-dot="3"></span><span class="wp-dot" data-dot="4"></span><span class="wp-dot" data-dot="5"></span><span class="wp-dot" data-dot="6"></span>
+    </div>
+    <p class="wp-count" id="wp-count">Étape 1 sur 7</p>
+
+    <form id="smform" autocomplete="on" novalidate>
+
+      <!-- Étape 1 : création + occasion -->
+      <fieldset class="fstep" data-step="0">
+        <h2>Qu'aimeriez-vous créer&nbsp;?</h2>
+        <div class="choices" data-single="type">
+          <button type="button" class="choice" data-v="Bouquet en satin">Bouquet en satin</button>
+          <button type="button" class="choice" data-v="Fleurs en fil chenille">Fleurs en fil chenille</button>
+          <button type="button" class="choice" data-v="Bougie ou fondants">Bougie ou fondants</button>
+          <button type="button" class="choice" data-v="Composition cadeau">Composition cadeau</button>
+          <button type="button" class="choice" data-v="Autre idée">Autre idée</button>
+        </div>
+        <h2 class="wq">Pour quelle occasion&nbsp;?</h2>
+        <div class="choices choices-3" data-single="occasion">
+          <button type="button" class="choice" data-v="Amour / couple">Amour · couple</button>
+          <button type="button" class="choice" data-v="Anniversaire">Anniversaire</button>
+          <button type="button" class="choice" data-v="Fête des mères">Fête des mères</button>
+          <button type="button" class="choice" data-v="Mariage">Mariage</button>
+          <button type="button" class="choice" data-v="Naissance">Naissance</button>
+          <button type="button" class="choice" data-v="Remerciement">Remerciement</button>
+          <button type="button" class="choice" data-v="Décoration">Décoration</button>
+          <button type="button" class="choice" data-v="Juste pour faire plaisir">Pour faire plaisir</button>
+          <button type="button" class="choice" data-v="Autre">Autre</button>
+        </div>
+      </fieldset>
+
+      <!-- Étape 2 : ambiance + couleurs -->
+      <fieldset class="fstep" data-step="1" hidden>
+        <h2>Quelle ambiance imaginez-vous&nbsp;?</h2>
+        <div class="choices choices-3" data-single="ambiance">
+          <button type="button" class="choice" data-v="Douce (rose poudré, crème)">Douce<small>rose poudré · crème</small></button>
+          <button type="button" class="choice" data-v="Passion (rouge, bordeaux)">Passion<small>rouge · bordeaux</small></button>
+          <button type="button" class="choice" data-v="Élégante (ivoire, champagne)">Élégante<small>ivoire · champagne</small></button>
+          <button type="button" class="choice" data-v="Pastel (rose, lilas, bleu)">Pastel<small>rose · lilas · bleu</small></button>
+          <button type="button" class="choice" data-v="Colorée">Colorée<small>plusieurs couleurs</small></button>
+          <button type="button" class="choice" data-v="Je laisse Cathy me proposer">Libre<small>je fais confiance à Cathy</small></button>
+        </div>
+        <h2 class="wq">Quelles couleurs vous plaisent&nbsp;? <small class="opt">plusieurs choix possibles</small></h2>
+        <div class="choices choices-sw" data-multi="couleurs">
+          <button type="button" class="choice" data-v="Rose poudré"><i style="background:#E8C5CD"></i>Rose poudré</button>
+          <button type="button" class="choice" data-v="Rose vif"><i style="background:#E75480"></i>Rose vif</button>
+          <button type="button" class="choice" data-v="Rouge"><i style="background:#C0242E"></i>Rouge</button>
+          <button type="button" class="choice" data-v="Bordeaux"><i style="background:#771D36"></i>Bordeaux</button>
+          <button type="button" class="choice" data-v="Crème"><i style="background:#F4E9D8"></i>Crème</button>
+          <button type="button" class="choice" data-v="Blanc"><i style="background:#FFFFFF;border:1px solid #ddd"></i>Blanc</button>
+          <button type="button" class="choice" data-v="Lilas"><i style="background:#C9B8E4"></i>Lilas</button>
+          <button type="button" class="choice" data-v="Violet"><i style="background:#7D5BA6"></i>Violet</button>
+          <button type="button" class="choice" data-v="Bleu"><i style="background:#3B62C4"></i>Bleu</button>
+          <button type="button" class="choice" data-v="Champagne doré"><i style="background:#C6A46D"></i>Champagne</button>
+        </div>
+      </fieldset>
+
+      <!-- Étape 3 : style + taille -->
+      <fieldset class="fstep" data-step="2" hidden>
+        <h2>Quel style recherchez-vous&nbsp;?</h2>
+        <div class="choices choices-3" data-single="style">
+          <button type="button" class="choice" data-v="Minimaliste">Minimaliste<small>peu de détails</small></button>
+          <button type="button" class="choice" data-v="Romantique">Romantique<small>fleurs, rubans, douceur</small></button>
+          <button type="button" class="choice" data-v="Élégant">Élégant<small>sobre et raffiné</small></button>
+          <button type="button" class="choice" data-v="Très décoré">Très décoré<small>perles, papillons…</small></button>
+          <button type="button" class="choice" data-v="Surprise : Cathy choisit">Surprise<small>Cathy choisit</small></button>
+        </div>
+        <h2 class="wq">Quelle taille imaginez-vous&nbsp;?</h2>
+        <div class="choices" data-single="taille">
+          <button type="button" class="choice" data-v="Petite attention">Petite attention</button>
+          <button type="button" class="choice" data-v="Composition standard">Standard</button>
+          <button type="button" class="choice" data-v="Grande création">Grande création</button>
+          <button type="button" class="choice" data-v="Je ne sais pas encore">Je ne sais pas</button>
+        </div>
+      </fieldset>
+
+      <!-- Étape 4 : budget + date -->
+      <fieldset class="fstep" data-step="3" hidden>
+        <h2>Quel budget souhaitez-vous consacrer à cette création&nbsp;?</h2>
+        <div class="choices choices-3" data-single="budget">
+          <button type="button" class="choice" data-v="Moins de 30 €">Moins de 30&nbsp;€</button>
+          <button type="button" class="choice" data-v="30 à 50 €">30 à 50&nbsp;€</button>
+          <button type="button" class="choice" data-v="50 à 80 €">50 à 80&nbsp;€</button>
+          <button type="button" class="choice" data-v="80 à 120 €">80 à 120&nbsp;€</button>
+          <button type="button" class="choice" data-v="Plus de 120 €">Plus de 120&nbsp;€</button>
+          <button type="button" class="choice" data-v="Je souhaite d'abord en discuter">J'aimerais d'abord en discuter</button>
+        </div>
+        <h2 class="wq">En avez-vous besoin pour une date précise&nbsp;? <small class="opt">facultatif</small></h2>
+        <label class="wlabel">
+          <input type="date" id="f-date" name="date">
+        </label>
+        <p class="whint">Cette date nous aide à étudier la faisabilité : elle n'est confirmée qu'après la réponse de Cathy.</p>
+      </fieldset>
+
+      <!-- Étape 5 : inspiration -->
+      <fieldset class="fstep" data-step="4" hidden>
+        <h2>Parlez-nous de votre idée</h2>
+        <label class="wlabel">
+          <textarea id="f-idee" maxlength="1000" rows="5" placeholder="Couleurs, personne à qui vous souhaitez l'offrir, détails importants, ambiance, éléments que vous aimez…"></textarea>
+        </label>
+        <h2 class="wq">Vous avez une inspiration&nbsp;? <small class="opt">facultatif</small></h2>
+        <label class="wlabel">
+          <input type="url" id="f-inspiration" placeholder="Collez un lien (Pinterest, Instagram…)">
+        </label>
+        <p class="whint">Votre image sert uniquement d'inspiration : Cathy créera une pièce dans l'univers Nacréa plutôt qu'une copie exacte. Vous pourrez aussi envoyer des photos en réponse à sa proposition.</p>
+      </fieldset>
+
+      <!-- Étape 6 : coordonnées -->
+      <fieldset class="fstep" data-step="5" hidden>
+        <h2>Où Cathy peut-elle vous répondre&nbsp;?</h2>
+        <div class="deux-w">
+          <label class="wlabel">Prénom
+            <input type="text" id="f-prenom" autocomplete="given-name" required>
+          </label>
+          <label class="wlabel">Nom <small class="opt">facultatif</small>
+            <input type="text" id="f-nom" autocomplete="family-name">
+          </label>
+        </div>
+        <label class="wlabel">Email
+          <input type="email" id="f-email" autocomplete="email" required placeholder="vous@exemple.fr">
+        </label>
+        <label class="wlabel">Téléphone <small class="opt">facultatif</small>
+          <input type="tel" id="f-tel" autocomplete="tel">
+        </label>
+        <p class="whint">Ces informations servent uniquement à répondre à votre demande.</p>
+      </fieldset>
+
+      <!-- Étape 7 : récapitulatif -->
+      <fieldset class="fstep" data-step="6" hidden>
+        <h2>Votre projet Nacréa</h2>
+        <div id="recap" class="recap"></div>
+        <p class="whint">Vous n'avez pas besoin d'une idée parfaitement définie : ces informations permettent simplement à Cathy de comprendre votre envie et de vous proposer une création adaptée. Rien n'est payé à cette étape.</p>
+      </fieldset>
+
+      <div class="wnav">
+        <button type="button" class="btn btn-s-w" id="w-prev" hidden>← Retour</button>
+        <span class="spacer-w"></span>
+        <button type="button" class="btn btn-primary" id="w-next">Continuer</button>
+        <button type="submit" class="btn btn-primary" id="w-send" hidden>Envoyer mon projet à Cathy</button>
+      </div>
+      <p class="werror" id="w-error" hidden></p>
+    </form>
+
+    <!-- Fallback sans Formspree : projet à copier -->
+    <div id="fallback" class="wfallback" hidden>
+      <h2>Votre idée est entre de bonnes mains ♡</h2>
+      <p>Il ne reste qu'une chose à faire : envoyez votre projet à Cathy en message. Il est déjà rédigé pour vous.</p>
+      <pre id="brief-txt" class="brief-txt"></pre>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-primary" id="btn-copier">Copier mon projet</button>
+        <a class="btn btn-ghost" href="https://www.instagram.com/catcandle55" target="_blank" rel="noopener">Ouvrir Instagram</a>
+      </div>
+      <p class="whint">Collez le message dans la conversation, ajoutez vos photos d'inspiration si vous en avez, et Cathy vous répond avec une proposition.</p>
+    </div>
+  </section>
 </main>
 
 <!-- GEN:FOOTER -->
@@ -88,5 +235,207 @@
 </footer>
 <!-- /GEN:FOOTER -->
 
+<script>
+"use strict";
+/* Formulaire sur-mesure multi-étapes.
+   - Sélections par cartes, sauvegarde locale du brouillon (localStorage).
+   - Envoi : Formspree si configuré dans scripts/config_nacrea.json,
+     sinon projet à copier + Instagram (bascule automatique). */
+(function () {
+  var LS = "nacrea_smesure_v1";
+  var TOTAL = 7;
+  var step = 0;
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(LS)) || {}; } catch (e) { state = {}; }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var steps = document.querySelectorAll(".fstep");
+  var form = $("smform");
+
+  // ---- Base produit (arrivée depuis « Personnaliser cette création ») ----
+  var params = new URLSearchParams(location.search);
+  var baseSlug = params.get("base");
+  if (baseSlug) {
+    fetch("/data/products.json").then(function (r) { return r.json(); }).then(function (cat) {
+      var p = (cat.produits || []).find(function (x) { return x.slug === baseSlug; });
+      if (!p) return;
+      state.base = p.nom;
+      var typeParCollection = {
+        "bouquets-satin": "Bouquet en satin", "fleurs-chenille": "Fleurs en fil chenille",
+        "bougies-fondants": "Bougie ou fondants", "coffrets": "Composition cadeau"
+      };
+      if (!state.type && typeParCollection[p.collection]) state.type = typeParCollection[p.collection];
+      $("base-nom").textContent = p.nom;
+      $("base-info").hidden = false;
+      save(); paint();
+    }).catch(function () {});
+  }
+
+  // ---- Sélections ----
+  document.querySelectorAll("[data-single],[data-multi]").forEach(function (group) {
+    var single = group.dataset.single;
+    var multi = group.dataset.multi;
+    group.querySelectorAll(".choice").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (single) {
+          state[single] = b.dataset.v;
+        } else {
+          var arr = state[multi] || [];
+          var i = arr.indexOf(b.dataset.v);
+          if (i >= 0) arr.splice(i, 1); else arr.push(b.dataset.v);
+          state[multi] = arr;
+        }
+        save(); paint();
+      });
+    });
+  });
+  ["f-date", "f-idee", "f-inspiration", "f-prenom", "f-nom", "f-email", "f-tel"].forEach(function (id) {
+    $(id).addEventListener("input", function () {
+      state[id.slice(2)] = $(id).value; save();
+    });
+  });
+
+  function save() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+
+  function paint() {
+    document.querySelectorAll("[data-single]").forEach(function (g) {
+      var v = state[g.dataset.single];
+      g.querySelectorAll(".choice").forEach(function (b) { b.classList.toggle("sel", b.dataset.v === v); });
+    });
+    document.querySelectorAll("[data-multi]").forEach(function (g) {
+      var arr = state[g.dataset.multi] || [];
+      g.querySelectorAll(".choice").forEach(function (b) { b.classList.toggle("sel", arr.indexOf(b.dataset.v) >= 0); });
+    });
+  }
+  ["date", "idee", "inspiration", "prenom", "nom", "email", "tel"].forEach(function (k) {
+    if (state[k]) $("f-" + k).value = state[k];
+  });
+  paint();
+
+  // ---- Navigation ----
+  function goTo(n) {
+    step = Math.max(0, Math.min(TOTAL - 1, n));
+    steps.forEach(function (s) { s.hidden = +s.dataset.step !== step; });
+    document.querySelectorAll(".wp-dot").forEach(function (d) {
+      d.classList.toggle("on", +d.dataset.dot <= step);
+    });
+    $("wp-count").textContent = "Étape " + (step + 1) + " sur " + TOTAL;
+    $("w-prev").hidden = step === 0;
+    $("w-next").hidden = step === TOTAL - 1;
+    $("w-send").hidden = step !== TOTAL - 1;
+    $("w-error").hidden = true;
+    if (step === TOTAL - 1) recap();
+  }
+  function erreur(msg) { var e = $("w-error"); e.textContent = msg; e.hidden = false; }
+  function valide() {
+    if (step === 0 && !state.type) { erreur("Choisissez le type de création qui vous fait envie."); return false; }
+    if (step === 0 && !state.occasion) { erreur("Et pour quelle occasion ? (« Autre » convient très bien.)"); return false; }
+    if (step === 3 && !state.budget) { erreur("Une fourchette de budget aide Cathy à bien dimensionner la création."); return false; }
+    if (step === 5) {
+      if (!$("f-prenom").value.trim()) { erreur("Votre prénom est nécessaire pour vous répondre."); return false; }
+      var em = $("f-email").value.trim();
+      if (!em || em.indexOf("@") < 1) { erreur("Un email valide est nécessaire pour recevoir la proposition de Cathy."); return false; }
+    }
+    return true;
+  }
+  $("w-next").addEventListener("click", function () {
+    if (valide()) { goTo(step + 1); $("formulaire").scrollIntoView({ behavior: "smooth", block: "start" }); }
+  });
+  $("w-prev").addEventListener("click", function () { goTo(step - 1); });
+
+  // ---- Récapitulatif ----
+  function lignes() {
+    var L = [];
+    if (state.base) L.push(["Point de départ", state.base]);
+    L.push(["Création", state.type || "—"]);
+    L.push(["Occasion", state.occasion || "—"]);
+    if (state.ambiance) L.push(["Ambiance", state.ambiance]);
+    if ((state.couleurs || []).length) L.push(["Couleurs", state.couleurs.join(", ")]);
+    if (state.style) L.push(["Style", state.style]);
+    if (state.taille) L.push(["Taille", state.taille]);
+    L.push(["Budget", state.budget || "—"]);
+    if (state.date) L.push(["Date souhaitée", state.date]);
+    if (state.idee) L.push(["L'idée", state.idee]);
+    if (state.inspiration) L.push(["Inspiration", state.inspiration]);
+    L.push(["Prénom", (state.prenom || "") + (state.nom ? " " + state.nom : "")]);
+    L.push(["Email", state.email || "—"]);
+    if (state.tel) L.push(["Téléphone", state.tel]);
+    return L;
+  }
+  var RETOUR = { "Point de départ": 0, "Création": 0, "Occasion": 0, "Ambiance": 1, "Couleurs": 1, "Style": 2, "Taille": 2, "Budget": 3, "Date souhaitée": 3, "L'idée": 4, "Inspiration": 4, "Prénom": 5, "Email": 5, "Téléphone": 5 };
+  function recap() {
+    var L = lignes();
+    $("recap").innerHTML = L.map(function (l, i) {
+      return '<div class="recap-row"><dt>' + l[0] +
+        ' <button type="button" class="recap-mod" data-go="' + (RETOUR[l[0]] || 0) + '">modifier</button></dt>' +
+        '<dd data-i="' + i + '"></dd></div>';
+    }).join("");
+    $("recap").querySelectorAll("dd").forEach(function (dd) {
+      dd.textContent = L[+dd.dataset.i][1];
+    });
+    $("recap").querySelectorAll(".recap-mod").forEach(function (b) {
+      b.addEventListener("click", function () { goTo(+b.dataset.go); });
+    });
+  }
+
+  function briefTexte() {
+    return "PROJET SUR-MESURE · NACRÉA BY CATHY\n" + lignes().map(function (l) {
+      return l[0] + " : " + l[1];
+    }).join("\n");
+  }
+
+  // ---- Envoi ----
+  var FORM_ID = "";
+  fetch("/scripts/config_nacrea.json").then(function (r) { return r.json(); })
+    .then(function (c) { FORM_ID = c.formspree_surmesure || ""; }).catch(function () {});
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!valide()) return;
+    var btn = $("w-send");
+    if (FORM_ID) {
+      btn.disabled = true; btn.textContent = "Envoi…";
+      var data = {};
+      lignes().forEach(function (l) { data[l[0]] = l[1]; });
+      data._subject = "Projet sur-mesure — " + (state.prenom || "");
+      data._replyto = state.email || "";
+      fetch("https://formspree.io/f/" + FORM_ID, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data)
+      }).then(function (r) {
+        if (!r.ok) throw new Error("formspree");
+        localStorage.removeItem(LS);
+        location.href = "/merci.html";
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = "Envoyer mon projet à Cathy";
+        montreFallback();
+      });
+    } else {
+      montreFallback();
+    }
+  });
+
+  function montreFallback() {
+    $("brief-txt").textContent = briefTexte();
+    form.hidden = true;
+    document.querySelector(".wprogress").hidden = true;
+    $("wp-count").hidden = true;
+    $("fallback").hidden = false;
+    $("fallback").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  $("btn-copier").addEventListener("click", function () {
+    var t = briefTexte();
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () {
+      $("btn-copier").textContent = "Copié ✓";
+      localStorage.removeItem(LS);
+    }).catch(function () {
+      window.prompt("Copiez votre projet :", t);
+    });
+  });
+
+  goTo(0);
+})();
+</script>
 </body>
 </html>

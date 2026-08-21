@@ -215,7 +215,7 @@ def page_produit(p):
 
     perso = ""
     if p.get("personnalisable"):
-        perso = ('<a class="btn btn-ghost" href="/sur-mesure.html">Personnaliser cette création</a>'
+        perso = (f'<a class="btn btn-ghost" href="/sur-mesure.html?base={p["slug"]}">Personnaliser cette création</a>'
                  '<p class="perso-note">Couleurs, texte, occasion : cette création peut être adaptée '
                  'à la personne qui la recevra.</p>')
 
@@ -388,7 +388,7 @@ def inject_manual_pages():
         "FOOTER": footer_html(),
         "COUPS-DE-COEUR": '<div class="grille-produits">' + "".join(carte(p) for p in coups) + "</div>",
     }
-    for page in ("index.html", "sur-mesure.html", "404.html", "idees-cadeaux.html", "merci-commande.html"):
+    for page in ("index.html", "sur-mesure.html", "404.html", "idees-cadeaux.html", "merci-commande.html", "merci.html"):
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue
