@@ -228,12 +228,14 @@ def page_boutique():
 <main class="page-boutique">
   <h1>La boutique</h1>
   <p class="intro">Chaque création est faite à la main par Cathy. Les couleurs peuvent être adaptées : <a href="/sur-mesure.html">imaginez la vôtre</a>.</p>
-  <div class="filtres" role="group" aria-label="Filtrer les créations">
+  <p class="filtre-label">L'occasion</p>
+  <div class="filtres" role="group" aria-label="Filtrer par occasion">
+    {chips_occ}
+  </div>
+  <p class="filtre-label">Le type de création</p>
+  <div class="filtres filtres-occ" role="group" aria-label="Filtrer par type de création">
     <button class="chip chip-active" data-filtre-collection="">Tout</button>
     {chips_col}
-  </div>
-  <div class="filtres filtres-occ" role="group" aria-label="Filtrer par occasion">
-    {chips_occ}
   </div>
   <div class="grille-produits" id="grille">{cartes}</div>
   <p class="vide" id="vide" hidden>Aucune création ne correspond à ces filtres pour le moment. <a href="/sur-mesure.html">Demandez-la en sur-mesure !</a></p>

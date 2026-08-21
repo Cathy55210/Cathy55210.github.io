@@ -87,6 +87,10 @@ h2 { font-size: var(--fs-h2); }
 .page-boutique .intro { color: #6b5f62; max-width: 640px; margin-bottom: 1.4rem; }
 .filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .7rem; }
 .filtres-occ { margin-bottom: 1.6rem; }
+.filtre-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--champagne); margin: .3rem 0 .45rem;
+}
 .chip {
   border: 1px solid #e0d3c8; background: #fff; color: var(--anthracite);
   padding: .5rem 1rem; min-height: 40px; border-radius: 999px;
