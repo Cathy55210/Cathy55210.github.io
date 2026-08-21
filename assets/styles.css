@@ -9,9 +9,11 @@
   --bordeaux-fonce: #5E1729;
   --champagne: #C6A46D;
   --anthracite: #30272A;
-  --fs-h1: clamp(1.7rem, 5vw, 2.8rem);
-  --fs-h2: clamp(1.3rem, 3.5vw, 2rem);
-  --fs-body: clamp(0.95rem, 2vw, 1.05rem);
+  /* Hiérarchie charte UI (Phase 2) : H1 64-80px desktop / 40-48 mobile, H2 44-56 / 32-38 */
+  --fs-h1: clamp(2.5rem, 6.5vw, 4.6rem);
+  --fs-h2: clamp(2rem, 4.2vw, 3.1rem);
+  --fs-h3: clamp(1.6rem, 3vw, 2rem);
+  --fs-body: clamp(1rem, 2vw, 1.125rem);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -23,34 +25,50 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--bordeaux); }
-h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; line-height: 1.15; }
+h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; line-height: 1.12; }
 h1 { font-size: var(--fs-h1); }
 h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
 
-/* ---------- Header ---------- */
+/* ---------- Header (épuré, logo centré, sticky + blur au scroll) ---------- */
 .site-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: .6rem 1rem; gap: 1rem;
-  border-bottom: 1px solid #eadfd6;
-  background: var(--ivoire);
+  position: sticky; top: 0; z-index: 50;
+  display: grid; grid-template-columns: auto auto; justify-content: center;
+  align-items: center; column-gap: 1.4rem; row-gap: 0;
+  padding: .5rem 1rem .55rem;
+  background: transparent;
+  transition: background .25s ease, box-shadow .25s ease;
 }
-.site-header img { width: 64px; height: auto; }
-.site-header nav { display: flex; gap: .3rem .9rem; flex-wrap: wrap; justify-content: flex-end; }
+.site-header.scrolled {
+  background: rgba(255, 249, 244, .86);
+  -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+  box-shadow: 0 1px 0 #eadfd6;
+}
+.site-header .logo-link { grid-column: 1 / -1; justify-self: center; order: -1; }
+.site-header img { width: 58px; height: auto; }
+.site-header nav { display: flex; gap: .2rem .7rem; flex-wrap: wrap; justify-content: center; }
 .site-header nav a {
   text-decoration: none; color: var(--anthracite);
-  font-weight: 600; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
-  padding: .55rem .35rem; min-height: 44px; display: inline-flex; align-items: center;
+  font-weight: 600; font-size: .8rem; letter-spacing: .09em; text-transform: uppercase;
+  padding: .45rem .35rem; min-height: 42px; display: inline-flex; align-items: center;
 }
 .site-header nav a:hover { color: var(--bordeaux); }
-@media (min-width: 768px) { .site-header { padding: .8rem 2rem; } .site-header img { width: 78px; } }
+@media (min-width: 900px) {
+  .site-header { grid-template-columns: 1fr auto 1fr; padding: .6rem 2rem; }
+  .site-header .logo-link { grid-column: auto; order: 0; }
+  .site-header .nav-l { justify-self: start; }
+  .site-header .nav-r { justify-self: end; }
+  .site-header nav { gap: .3rem 1.1rem; }
+  .site-header img { width: 70px; }
+}
 
-/* ---------- Boutons & badges ---------- */
+/* ---------- Boutons & badges (rayon 10px, jamais pill — charte UI) ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 48px; padding: .7rem 1.6rem;
-  border-radius: 999px; text-decoration: none;
+  border-radius: 10px; text-decoration: none;
   font-weight: 700; font-size: .95rem;
-  transition: background .2s ease, transform .15s ease;
+  transition: background .2s ease, transform .18s ease, color .2s ease;
 }
 .btn-primary { background: var(--bordeaux); color: var(--ivoire); }
 .btn-primary:hover { background: var(--bordeaux-fonce); transform: translateY(-1px); }
@@ -77,9 +95,35 @@ h2 { font-size: var(--fs-h2); }
 .carte-produit:hover .carte-img img { transform: scale(1.04); }
 .carte-produit h3 {
   font-family: 'Manrope', sans-serif; font-size: .92rem; font-weight: 600;
-  margin: .55rem 0 .1rem; line-height: 1.35;
+  margin: .55rem 0 .05rem; line-height: 1.35;
+}
+.carte-cat {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #8a7c80; margin-bottom: .15rem;
 }
 .carte-prix { color: var(--bordeaux); font-weight: 700; font-size: .95rem; }
+.carte-perso { font-size: .74rem; font-weight: 600; color: var(--champagne); margin-top: .1rem; }
+
+/* ---------- Animations douces (fade-up au scroll, via main.js) ---------- */
+.js-reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+.js-reveal.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- Pastilles couleurs (section personnalisation) ---------- */
+.palette-perso {
+  display: flex; flex-wrap: wrap; gap: 1.1rem; justify-content: center;
+  margin: 0 auto 2.1rem;
+}
+.palette-perso .pp {
+  display: grid; justify-items: center; gap: .35rem;
+  font-size: .75rem; color: #F3DDE2;
+}
+.palette-perso .pp i {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid rgba(255, 249, 244, .65); display: block;
+}
 
 /* ---------- Page boutique ---------- */
 .page-boutique { max-width: 1120px; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
@@ -174,8 +218,8 @@ h2 { font-size: var(--fs-h2); }
 }
 @media (min-width: 900px) { .hero { grid-template-columns: 1.15fr 1fr; padding-top: 3rem; } }
 .hero h1 {
-  font-size: clamp(2.3rem, 6vw, 3.9rem); font-weight: 500;
-  line-height: 1.08; margin-bottom: 1rem; letter-spacing: .01em;
+  font-size: var(--fs-h1); font-weight: 500;
+  line-height: 1.06; margin-bottom: 1rem; letter-spacing: .01em;
 }
 .hero-sous { color: #6b5f62; max-width: 34rem; margin-bottom: 1.6rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
@@ -204,8 +248,7 @@ h2 { font-size: var(--fs-h2); }
 }
 @media (min-width: 820px) { .reassurance-strip { grid-template-columns: repeat(4, 1fr); } }
 .ritem {
-  background: #fff; border: 1px solid #eadfd6; border-radius: 14px;
-  padding: 1rem .9rem; display: grid; justify-items: center; text-align: center; gap: .15rem;
+  padding: 1rem .6rem; display: grid; justify-items: center; text-align: center; gap: .15rem;
 }
 .ritem svg { color: var(--champagne); margin-bottom: .3rem; }
 .ritem b { font-size: .88rem; }

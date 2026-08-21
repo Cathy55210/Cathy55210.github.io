@@ -50,17 +50,21 @@ def head(titre, description, path, og_image, og_type="website"):
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Manrope:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Manrope:wght@400;500;600;700&display=swap"></noscript>
-  <link rel="stylesheet" href="/assets/styles.css">"""
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/main.js" defer></script>"""
 
 
 def header_nav():
     return f"""<header class="site-header">
+  <nav class="nav-l" aria-label="Navigation principale">
+    <a href="/boutique.html">Boutique</a>
+    <a href="/boutique.html?collection=bouquets-satin">Bouquets</a>
+    <a href="/boutique.html?collection=bougies-fondants">Bougies</a>
+  </nav>
   <a href="/" class="logo-link" aria-label="{e(MARQUE)} — accueil">
     <img src="/assets/logo-header.webp" alt="{e(MARQUE)}" width="98" height="100">
   </a>
-  <nav aria-label="Navigation principale">
-    <a href="/">Accueil</a>
-    <a href="/boutique.html">Boutique</a>
+  <nav class="nav-r" aria-label="Navigation secondaire">
     <a href="/sur-mesure.html">Sur-mesure</a>
   </nav>
 </header>"""
@@ -133,12 +137,16 @@ def carte(p):
     elif p["statut"] == "sur-commande":
         statut = '<span class="badge">Sur commande</span>'
     occ = " ".join(p["occasions"])
+    perso = '<p class="carte-perso">✦ Personnalisable</p>' if p.get("personnalisable") else ""
+    cat = CFG["collections"].get(p["collection"], p["collection"])
     return f"""
     <a class="carte-produit" href="/creation/{p['slug']}.html"
        data-collection="{p['collection']}" data-occasions="{occ}">
       <div class="carte-img"><img src="/{e(p['photos'][0])}" alt="{e(p['nom'])}" loading="lazy" width="600" height="600">{statut}</div>
       <h3>{e(p['nom'])}</h3>
+      <p class="carte-cat">{e(cat)}</p>
       <p class="carte-prix">{p['prix']} €</p>
+      {perso}
     </a>"""
 
 
