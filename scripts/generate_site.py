@@ -265,7 +265,7 @@ def page_produit(p):
   {section_details(p)}
   {section_entretien(p)}
   <section class="produit-bloc atelier-fiche">
-    <h2>Créée par Cathy</h2>
+    <h2>Créé par Cathy</h2>
     <p>Chaque création Nacréa est préparée avec attention par Cathy, à Vigneulles-lès-Hattonchâtel, des premières associations de couleurs jusqu'aux derniers détails. Il n'en existe pas deux identiques.</p>
     <p><a href="/sur-mesure.html">Envie d'une version à vos couleurs ? Décrivez votre idée.</a></p>
   </section>
@@ -304,8 +304,8 @@ def page_boutique():
 <!-- Page générée automatiquement par scripts/generate_site.py — ne pas éditer à la main -->
 {header_nav()}
 <main class="page-boutique">
-  <h1>La boutique</h1>
-  <p class="intro">Chaque création est faite à la main par Cathy. Les couleurs peuvent être adaptées : <a href="/sur-mesure.html">imaginez la vôtre</a>.</p>
+  <h1>Les créations Nacréa</h1>
+  <p class="intro">Bouquets, bougies et compositions imaginés pour offrir, célébrer ou simplement embellir le quotidien. Chaque pièce est faite main et peut être adaptée : <a href="/sur-mesure.html">imaginez la vôtre</a>.</p>
   <p class="filtre-label">L'occasion</p>
   <div class="filtres" role="group" aria-label="Filtrer par occasion">
     {chips_occ}
