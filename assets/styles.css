@@ -140,3 +140,149 @@ h2 { font-size: var(--fs-h2); }
 .footer-credit a { color: var(--ivoire); opacity: .6; font-size: .78rem; text-decoration: none; }
 .footer-credit a:hover { opacity: .9; }
 .footer-credit strong { color: var(--champagne); }
+.footer-lieu { font-size: .8rem; opacity: .55; margin-bottom: 1.2rem; }
+
+/* ============================================================
+   PAGE D'ACCUEIL
+   ============================================================ */
+.eyebrow {
+  font-size: .74rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--champagne); margin-bottom: .5rem;
+}
+.eyebrow-clair { color: var(--rose); }
+.btn-ghost {
+  border: 1.5px solid var(--bordeaux); color: var(--bordeaux); background: transparent;
+}
+.btn-ghost:hover { background: var(--bordeaux); color: var(--ivoire); transform: translateY(-1px); }
+.btn-clair { background: var(--ivoire); color: var(--bordeaux); }
+.btn-clair:hover { background: #fff; transform: translateY(-1px); }
+.sec { max-width: 1120px; margin: 0 auto; padding: 3.2rem 1rem; }
+.sec h2 { max-width: 620px; margin-bottom: 1.6rem; }
+.centre { text-align: center; margin-top: 1.8rem; }
+
+/* ---------- Hero ---------- */
+.hero {
+  max-width: 1120px; margin: 0 auto; padding: 2.2rem 1rem 3rem;
+  display: grid; gap: 2.2rem; align-items: center;
+  background:
+    radial-gradient(ellipse 60% 46% at 82% 12%, #F7E3E9 0%, rgba(247,227,233,0) 70%),
+    radial-gradient(ellipse 44% 34% at 8% 88%, #F4EADB 0%, rgba(244,234,219,0) 70%);
+}
+@media (min-width: 900px) { .hero { grid-template-columns: 1.15fr 1fr; padding-top: 3rem; } }
+.hero h1 {
+  font-size: clamp(2.3rem, 6vw, 3.9rem); font-weight: 500;
+  line-height: 1.08; margin-bottom: 1rem; letter-spacing: .01em;
+}
+.hero-sous { color: #6b5f62; max-width: 34rem; margin-bottom: 1.6rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+.hero-visu { display: flex; justify-content: center; position: relative; }
+.arche {
+  width: min(78vw, 380px); aspect-ratio: 4 / 5;
+  border-radius: 999px 999px 26px 26px; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(119, 29, 54, .16);
+  position: relative; z-index: 1;
+}
+.arche img { width: 100%; height: 100%; object-fit: cover; }
+.hero-visu::before {
+  content: ""; position: absolute; inset: -16px -10px auto auto;
+  width: 120px; height: 120px; border: 1.5px solid var(--champagne);
+  border-radius: 50%; opacity: .7;
+}
+.hero-visu::after {
+  content: ""; position: absolute; left: 8%; bottom: -14px;
+  width: 54px; height: 54px; background: var(--rose); opacity: .5; border-radius: 50%;
+}
+
+/* ---------- Réassurance ---------- */
+.reassurance-strip {
+  max-width: 1120px; margin: 0 auto; padding: 0 1rem 1rem;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem;
+}
+@media (min-width: 820px) { .reassurance-strip { grid-template-columns: repeat(4, 1fr); } }
+.ritem {
+  background: #fff; border: 1px solid #eadfd6; border-radius: 14px;
+  padding: 1rem .9rem; display: grid; justify-items: center; text-align: center; gap: .15rem;
+}
+.ritem svg { color: var(--champagne); margin-bottom: .3rem; }
+.ritem b { font-size: .88rem; }
+.ritem span { font-size: .76rem; color: #8a7c80; }
+
+/* ---------- Collections ---------- */
+.collections-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .9rem; }
+@media (min-width: 820px) { .collections-grid { grid-template-columns: repeat(4, 1fr); gap: 1.2rem; } }
+.ccard {
+  background: var(--fond, #fff); border-radius: 18px; padding: 1.6rem 1.1rem 1.3rem;
+  text-decoration: none; color: var(--anthracite);
+  display: grid; justify-items: center; text-align: center; gap: .35rem;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.ccard:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(48, 39, 42, .12); }
+.ccard h3 { font-size: 1.15rem; font-weight: 600; }
+.ccard p { font-size: .82rem; color: #6b5f62cc; line-height: 1.45; }
+.ccard .clien {
+  margin-top: .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--bordeaux);
+  border-bottom: 1.5px solid var(--bordeaux); padding-bottom: .15rem;
+}
+
+/* ---------- Occasions ---------- */
+.occasions-home { text-align: center; }
+.occasions-home h2 { margin-left: auto; margin-right: auto; }
+.occ-chips { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+.occ-chips .chip { text-decoration: none; display: inline-flex; align-items: center; }
+.occ-chips .chip:hover { background: var(--bordeaux); color: var(--ivoire); border-color: var(--bordeaux); }
+
+/* ---------- Sur-mesure ---------- */
+.surmesure { background: var(--bordeaux); color: var(--ivoire); }
+.surmesure-int { max-width: 1120px; margin: 0 auto; padding: 3.4rem 1rem; text-align: center; }
+.surmesure h2 { color: var(--ivoire); margin: 0 auto 1rem; }
+.surmesure-sous { color: #f3dde2cc; max-width: 540px; margin: 0 auto 2rem; }
+.etapes {
+  list-style: none; display: grid; gap: 1rem; margin-bottom: 2.2rem;
+  grid-template-columns: 1fr; max-width: 300px; margin-left: auto; margin-right: auto;
+}
+@media (min-width: 820px) { .etapes { grid-template-columns: repeat(5, 1fr); max-width: 980px; } }
+.etapes li { display: grid; justify-items: center; gap: .3rem; font-size: .88rem; color: #f3dde2; }
+.etapes b {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600;
+  color: var(--champagne); line-height: 1;
+}
+
+/* ---------- Atelier ---------- */
+.atelier { text-align: center; max-width: 720px; }
+.atelier h2 { margin-left: auto; margin-right: auto; }
+.atelier p { color: #6b5f62; }
+.citation {
+  font-family: 'Great Vibes', cursive; font-size: clamp(1.7rem, 4vw, 2.4rem);
+  color: var(--bordeaux) !important; margin-top: 1.4rem;
+}
+
+/* ---------- Réseaux ---------- */
+.reseaux { text-align: center; padding-bottom: 4rem; }
+.reseaux h2 { margin-left: auto; margin-right: auto; }
+.reseaux-sous { color: #6b5f62; margin-bottom: 1.4rem; }
+.reseaux-btns { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+
+/* ============================================================
+   PAGE SUR-MESURE & 404
+   ============================================================ */
+.page-simple { max-width: 760px; margin: 0 auto; padding: 2.4rem 1rem 4rem; }
+.page-simple h1 { margin-bottom: .8rem; }
+.page-simple .intro { color: #6b5f62; margin-bottom: 2rem; }
+.sm-etapes { list-style: none; display: grid; gap: 1rem; margin: 1.6rem 0 2.2rem; }
+.sm-etapes li {
+  background: #fff; border: 1px solid #eadfd6; border-radius: 14px;
+  padding: 1rem 1.2rem; display: flex; gap: 1rem; align-items: baseline;
+}
+.sm-etapes b {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600;
+  color: var(--champagne); line-height: 1;
+}
+.sm-idees { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 2rem; }
+.sm-idees span {
+  border: 1px dashed #d5c5b8; border-radius: 999px; padding: .45rem .95rem;
+  font-size: .84rem; color: #6b5f62;
+}
+.p404 { min-height: 62svh; display: grid; place-content: center; text-align: center; gap: 1rem; padding: 2rem 1rem; }
+.p404 h1 { font-size: clamp(2rem, 6vw, 3rem); }
+.p404 p { color: #6b5f62; }

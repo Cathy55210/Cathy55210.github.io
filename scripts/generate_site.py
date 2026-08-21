@@ -54,8 +54,7 @@ def head(titre, description, path, og_image, og_type="website"):
 
 
 def header_nav():
-    return f"""
-<header class="site-header">
+    return f"""<header class="site-header">
   <a href="/" class="logo-link" aria-label="{e(MARQUE)} — accueil">
     <img src="/assets/logo-header.webp" alt="{e(MARQUE)}" width="98" height="100">
   </a>
@@ -63,29 +62,31 @@ def header_nav():
     <a href="/">Accueil</a>
     <a href="/boutique.html">Boutique</a>
     <a href="/sur-mesure.html">Sur-mesure</a>
-    <a href="/notre-univers.html">Notre univers</a>
   </nav>
 </header>"""
 
 
-def footer():
-    return f"""
-<footer class="site-footer">
-  <p class="footer-baseline">{e(CFG["baseline"])} · {e(CFG["ville"])} ({e(CFG["departement"])})</p>
+def footer_html():
+    reseaux = ""
+    for cle, label in (("instagram", "Instagram"), ("tiktok", "TikTok"), ("facebook", "Facebook")):
+        if CFG.get(cle):
+            reseaux += f'<a href="{e(CFG[cle])}" target="_blank" rel="noopener">{label}</a>'
+    return f"""<footer class="site-footer">
+  <p class="footer-baseline">Des fleurs qui ne fanent jamais. Des attentions qui restent.</p>
   <nav aria-label="Liens de bas de page">
     <a href="/boutique.html">Boutique</a>
     <a href="/sur-mesure.html">Sur-mesure</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/mentions-legales.html">Mentions légales</a>
-    <a href="/cgv.html">CGV</a>
-    <a href="/confidentialite.html">Confidentialité</a>
+    {reseaux}
   </nav>
+  <p class="footer-lieu">{e(CFG["baseline"])} · {e(CFG["ville"])} ({e(CFG["departement"])})</p>
   <div class="footer-credit">
     <a href="https://digitaldreamsbox.com" target="_blank" rel="noopener">Site réalisé par <strong>Digital Dreamsbox</strong></a>
   </div>
-</footer>
-</body>
-</html>"""
+</footer>"""
+
+
+def footer():
+    return "\n" + footer_html() + "\n</body>\n</html>"
 
 
 def bouton_commande(p):
@@ -242,6 +243,10 @@ def page_boutique():
 (function(){
   var col = "", occ = "";
   var cartes = Array.from(document.querySelectorAll('#grille .carte-produit'));
+  // Filtres pré-appliqués depuis l'URL (liens des sections Occasions / Collections de l'accueil)
+  var params = new URLSearchParams(location.search);
+  if (params.get('collection')) col = params.get('collection');
+  if (params.get('occasion')) occ = params.get('occasion');
   function applique(){
     var visibles = 0;
     cartes.forEach(function(c){
@@ -270,6 +275,15 @@ def page_boutique():
       applique();
     });
   });
+  if (col) {
+    var bc = document.querySelector('[data-filtre-collection="'+col+'"]');
+    if (bc) { document.querySelectorAll('[data-filtre-collection]').forEach(function(x){x.classList.remove('chip-active');}); bc.classList.add('chip-active'); }
+  }
+  if (occ) {
+    var bo = document.querySelector('[data-filtre-occasion="'+occ+'"]');
+    if (bo) bo.classList.add('chip-active');
+  }
+  if (col || occ) applique();
 })();
 </script>
 </body>
@@ -277,10 +291,34 @@ def page_boutique():
 
 
 def sitemap():
-    urls = [f"{DOMAINE}/", f"{DOMAINE}/boutique.html"]
+    urls = [f"{DOMAINE}/", f"{DOMAINE}/boutique.html", f"{DOMAINE}/sur-mesure.html"]
     urls += [f"{DOMAINE}/creation/{p['slug']}.html" for p in PRODUITS]
     entries = "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}</urlset>\n'
+
+
+def inject_manual_pages():
+    """Injecte les blocs générés (nav, footer, coups de cœur) dans les pages
+    écrites à la main, entre marqueurs GEN — idempotent."""
+    import re
+    coups = [p for p in PRODUITS if p.get("coup_de_coeur") and p["statut"] != "epuise"][:4]
+    blocs = {
+        "NAV": header_nav(),
+        "FOOTER": footer_html(),
+        "COUPS-DE-COEUR": '<div class="grille-produits">' + "".join(carte(p) for p in coups) + "</div>",
+    }
+    for page in ("index.html", "sur-mesure.html", "404.html"):
+        path = os.path.join(ROOT, page)
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f_:
+            html_page = f_.read()
+        for nom, contenu in blocs.items():
+            motif = re.compile(f"(<!-- GEN:{nom} -->).*?(<!-- /GEN:{nom} -->)", re.DOTALL)
+            html_page = motif.sub(lambda m: m.group(1) + "\n" + contenu + "\n" + m.group(2), html_page)
+        with open(path, "w", encoding="utf-8") as f_:
+            f_.write(html_page)
+        print(f"injecté : {page}")
 
 
 def main():
@@ -306,6 +344,8 @@ def main():
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f_:
         f_.write(sitemap())
     print("généré : sitemap.xml")
+
+    inject_manual_pages()
 
     print(f"\n{len(PRODUITS)} produit(s) · OK")
 
