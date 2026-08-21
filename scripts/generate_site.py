@@ -14,6 +14,7 @@ import html
 import json
 import os
 import sys
+from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -65,6 +66,7 @@ def header_nav():
     <img src="/assets/logo-header.webp" alt="{e(MARQUE)}" width="98" height="100">
   </a>
   <nav class="nav-r" aria-label="Navigation secondaire">
+    <a href="/idees-cadeaux.html">Idées cadeaux</a>
     <a href="/sur-mesure.html">Sur-mesure</a>
   </nav>
 </header>"""
@@ -79,6 +81,7 @@ def footer_html():
   <p class="footer-baseline">Des fleurs qui ne fanent jamais. Des attentions qui restent.</p>
   <nav aria-label="Liens de bas de page">
     <a href="/boutique.html">Boutique</a>
+    <a href="/idees-cadeaux.html">Idées cadeaux</a>
     <a href="/sur-mesure.html">Sur-mesure</a>
     {reseaux}
   </nav>
@@ -136,6 +139,12 @@ def carte(p):
         statut = '<span class="badge badge-off">Épuisé</span>'
     elif p["statut"] == "sur-commande":
         statut = '<span class="badge">Sur commande</span>'
+    try:
+        recent = (date.today() - date.fromisoformat(p.get("ajoute_le", "2000-01-01"))).days <= 30
+    except ValueError:
+        recent = False
+    if recent and p["statut"] != "epuise":
+        statut += '<span class="badge badge-neuf">Nouveau</span>'
     occ = " ".join(p["occasions"])
     perso = '<p class="carte-perso">✦ Personnalisable</p>' if p.get("personnalisable") else ""
     cat = CFG["collections"].get(p["collection"], p["collection"])
@@ -165,8 +174,9 @@ def page_produit(p):
 
     perso = ""
     if p.get("personnalisable"):
-        perso = ('<p class="perso-note">Cette création est personnalisable (couleurs, texte, occasion) : '
-                 '<a href="/sur-mesure.html">décrivez votre idée à Cathy</a>.</p>')
+        perso = ('<a class="btn btn-ghost" href="/sur-mesure.html">Personnaliser cette création</a>'
+                 '<p class="perso-note">Couleurs, texte, occasion : cette création peut être adaptée '
+                 'à la personne qui la recevra.</p>')
 
     paragraphs = "".join(f"<p>{e(par)}</p>" for par in p["description"].split("\n\n"))
 
@@ -189,8 +199,10 @@ def page_produit(p):
       <h1>{e(p['nom'])}</h1>
       <p class="prix">{p['prix']} €</p>
       <p class="accroche">{e(p['accroche'])}</p>
-      {bouton_commande(p)}
-      {perso}
+      <div class="achat-ctas">
+        {bouton_commande(p)}
+        {perso}
+      </div>
       <ul class="reassurance">
         <li>Fait main à l'atelier, à {e(CFG['ville'])}</li>
         <li>Envoi soigné partout en France, ou remise en main propre</li>
@@ -204,7 +216,7 @@ def page_produit(p):
     <p class="occasions-tags">Idéal pour : {e(labels_occ)}.</p>
   </section>
   <section class="cross-sell">
-    <h2>Complétez votre cadeau</h2>
+    <h2>Pour compléter votre attention</h2>
     <div class="grille-produits">{cross}</div>
   </section>
 </main>
@@ -301,7 +313,8 @@ def page_boutique():
 
 
 def sitemap():
-    urls = [f"{DOMAINE}/", f"{DOMAINE}/boutique.html", f"{DOMAINE}/sur-mesure.html"]
+    urls = [f"{DOMAINE}/", f"{DOMAINE}/boutique.html", f"{DOMAINE}/sur-mesure.html",
+            f"{DOMAINE}/idees-cadeaux.html"]
     urls += [f"{DOMAINE}/creation/{p['slug']}.html" for p in PRODUITS]
     entries = "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}</urlset>\n'
@@ -317,7 +330,7 @@ def inject_manual_pages():
         "FOOTER": footer_html(),
         "COUPS-DE-COEUR": '<div class="grille-produits">' + "".join(carte(p) for p in coups) + "</div>",
     }
-    for page in ("index.html", "sur-mesure.html", "404.html"):
+    for page in ("index.html", "sur-mesure.html", "404.html", "idees-cadeaux.html", "merci-commande.html"):
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue

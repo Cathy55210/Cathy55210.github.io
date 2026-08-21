@@ -80,6 +80,33 @@ h3 { font-size: var(--fs-h3); }
   padding: .25rem .6rem; border-radius: 999px; border: 1px solid var(--rose);
 }
 .badge-off { background: var(--anthracite); color: var(--ivoire); border-color: var(--anthracite); }
+.badge-neuf { left: auto; right: .7rem; background: var(--rose); color: var(--bordeaux); border-color: var(--rose); }
+.achat-ctas { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; }
+
+/* ---------- Page idées cadeaux ---------- */
+.page-idees { max-width: 1120px; margin: 0 auto; padding: 2.4rem 1rem 4rem; }
+.page-idees h1 { margin-bottom: .6rem; }
+.page-idees .intro { color: #6b5f62; max-width: 620px; margin-bottom: 2rem; }
+.occards { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 700px) { .occards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .occards { grid-template-columns: repeat(3, 1fr); } .occard-large { grid-column: span 3; } }
+.occard {
+  background: var(--fond, #fff); border-radius: 18px; padding: 2rem 1.6rem 1.6rem;
+  text-decoration: none; color: var(--anthracite);
+  display: grid; gap: .3rem; align-content: start;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.occard:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(48, 39, 42, .1); }
+.occard h2 { font-size: clamp(1.5rem, 2.6vw, 1.9rem); }
+.occard p { font-size: .92rem; color: #6b5f62; }
+.occard .clien {
+  margin-top: .7rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--bordeaux); justify-self: start;
+  border-bottom: 1.5px solid var(--bordeaux); padding-bottom: .15rem;
+}
+.idees-perso { text-align: center; margin-top: 3rem; padding-top: 2.4rem; border-top: 1px solid #eadfd6; }
+.idees-perso h2 { margin-bottom: .4rem; }
+.idees-perso p { color: #6b5f62; margin-bottom: 1.3rem; }
 
 /* ---------- Grille produits / cartes ---------- */
 .grille-produits {
