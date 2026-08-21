@@ -81,8 +81,11 @@ def footer_html():
   <p class="footer-baseline">Des fleurs qui ne fanent jamais. Des attentions qui restent.</p>
   <nav aria-label="Liens de bas de page">
     <a href="/boutique.html">Boutique</a>
+    <a href="/boutique.html?collection=bouquets-satin">Bouquets en satin</a>
+    <a href="/boutique.html?collection=fleurs-chenille">Fleurs en fil chenille</a>
+    <a href="/boutique.html?collection=bougies-fondants">Bougies artisanales</a>
     <a href="/idees-cadeaux.html">Idées cadeaux</a>
-    <a href="/sur-mesure.html">Sur-mesure</a>
+    <a href="/sur-mesure.html">Création personnalisée</a>
     {reseaux}
   </nav>
   <p class="footer-lieu">{e(CFG["baseline"])} · {e(CFG["ville"])} ({e(CFG["departement"])})</p>
@@ -131,6 +134,34 @@ def schema_product(p):
     }
     return ('<script type="application/ld+json">'
             + json.dumps(data, ensure_ascii=False) + "</script>")
+
+
+def schema_breadcrumb(p):
+    cat_label = CFG["collections"].get(p["collection"], p["collection"])
+    data = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": f"{DOMAINE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Boutique", "item": f"{DOMAINE}/boutique.html"},
+            {"@type": "ListItem", "position": 3, "name": cat_label,
+             "item": f"{DOMAINE}/boutique.html?collection={p['collection']}"},
+            {"@type": "ListItem", "position": 4, "name": p["nom"]},
+        ],
+    }
+    return ('<script type="application/ld+json">'
+            + json.dumps(data, ensure_ascii=False) + "</script>")
+
+
+def titre_produit(p):
+    """Title SEO : ajoute la catégorie seulement si le nom ne la contient pas déjà
+    (« Éclat Rosé » → « Éclat Rosé — Bouquets en satin », mais pas de doublon
+    pour « Bouquet 7 roses — rose poudré »)."""
+    cat_label = CFG["collections"].get(p["collection"], p["collection"])
+    mot_cle = cat_label.split()[0].lower().rstrip("s")
+    if mot_cle in p["nom"].lower():
+        return p["nom"]
+    return f"{p['nom']} — {cat_label}"
 
 
 def carte(p):
@@ -227,8 +258,9 @@ def page_produit(p):
     if p.get("delai"):
         delai = f'<p class="delai-note">Fabrication : {e(p["delai"])}</p>'
 
-    return f"""{head(p['nom'], p['accroche'], f"/creation/{p['slug']}.html", p['photos'][0], "product")}
+    return f"""{head(titre_produit(p), p['accroche'], f"/creation/{p['slug']}.html", p['photos'][0], "product")}
   {schema_product(p)}
+  {schema_breadcrumb(p)}
 </head>
 <body>
 <!-- Page générée automatiquement par scripts/generate_site.py — ne pas éditer à la main -->
@@ -237,7 +269,7 @@ def page_produit(p):
   <nav class="fil" aria-label="Fil d'Ariane"><a href="/">Accueil</a> › <a href="/boutique.html">Boutique</a> › <a href="/boutique.html?collection={p['collection']}">{e(cat_label)}</a> › <span>{e(p['nom'])}</span></nav>
   <div class="produit-grille">
     <section class="galerie">
-      <img id="galerie-main" src="/{e(p['photos'][0])}" alt="{e(p['nom'])}" width="900" height="900">
+      <img id="galerie-main" src="/{e(p['photos'][0])}" alt="{e(p['nom'])}, création faite main Nacréa by Cathy" width="900" height="900">
       {thumbs}
     </section>
     <section class="infos">
