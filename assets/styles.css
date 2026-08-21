@@ -138,20 +138,6 @@ h3 { font-size: var(--fs-h3); }
   .js-reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* ---------- Pastilles couleurs (section personnalisation) ---------- */
-.palette-perso {
-  display: flex; flex-wrap: wrap; gap: 1.1rem; justify-content: center;
-  margin: 0 auto 2.1rem;
-}
-.palette-perso .pp {
-  display: grid; justify-items: center; gap: .35rem;
-  font-size: .75rem; color: #F3DDE2;
-}
-.palette-perso .pp i {
-  width: 34px; height: 34px; border-radius: 50%;
-  border: 2px solid rgba(255, 249, 244, .65); display: block;
-}
-
 /* ---------- Page boutique ---------- */
 .page-boutique { max-width: 1120px; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
 .page-boutique h1 { margin-bottom: .3rem; }
