@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Gestionnaire · Nacréa by Cathy</title>
+<link rel="icon" href="/assets/favicon-32-nc.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ivoire:#FFF9F4;--rose:#E8C5CD;--bordeaux:#771D36;--bordeaux2:#5E1729;--champagne:#C6A46D;--anthracite:#30272A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ivoire);color:var(--anthracite);font-family:'Manrope',sans-serif;line-height:1.55;font-size:15px}
+.wrap{max-width:860px;margin:0 auto;padding:1.2rem 1rem 5rem}
+header.top{display:flex;align-items:center;gap:.9rem;padding:.4rem 0 1rem}
+header.top img{width:54px}
+header.top h1{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600}
+header.top p{font-size:.78rem;color:#8a7c80}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:46px;padding:.6rem 1.3rem;border-radius:999px;border:none;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-p{background:var(--bordeaux);color:var(--ivoire)}
+.btn-p:hover{background:var(--bordeaux2)}
+.btn-s{background:#fff;color:var(--anthracite);border:1.5px solid #e0d3c8}
+.btn-s:hover{border-color:var(--bordeaux)}
+.btn-danger{background:none;border:none;color:#a33;font-weight:600;font-size:.82rem;cursor:pointer;min-height:44px;padding:0 .5rem}
+.btn[disabled]{opacity:.5;cursor:wait}
+.bandeau{border-radius:12px;padding:.9rem 1.1rem;font-size:.88rem;margin-bottom:1.1rem;background:#fff;border:1px solid var(--rose)}
+.bandeau.ok{border-color:#b7c4b0}
+.bandeau b{color:var(--bordeaux)}
+.cartes{display:grid;gap:.7rem}
+.cprod{display:flex;gap:.9rem;align-items:center;background:#fff;border:1px solid #eadfd6;border-radius:14px;padding:.7rem}
+.cprod img{width:74px;height:74px;object-fit:cover;border-radius:10px;background:#f4ebe3}
+.cprod .inf{flex:1;min-width:0}
+.cprod .inf b{display:block;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cprod .inf span{font-size:.8rem;color:#8a7c80}
+.cprod .prix{font-weight:700;color:var(--bordeaux);white-space:nowrap}
+.tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .55rem;border-radius:999px;background:var(--ivoire);border:1px solid var(--rose);color:var(--bordeaux);margin-top:.2rem}
+.tag.off{background:var(--anthracite);color:#fff;border-color:var(--anthracite)}
+form{display:grid;gap:1.1rem;background:#fff;border:1px solid #eadfd6;border-radius:16px;padding:1.3rem}
+label{display:grid;gap:.35rem;font-weight:600;font-size:.88rem}
+label small{font-weight:400;color:#8a7c80}
+input[type=text],input[type=number],input[type=url],textarea,select{font-family:inherit;font-size:.95rem;padding:.7rem .8rem;border:1.5px solid #e0d3c8;border-radius:10px;background:var(--ivoire);min-height:46px;width:100%}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--champagne);border-color:var(--champagne)}
+.deux{display:grid;gap:1.1rem}
+@media(min-width:640px){.deux{grid-template-columns:1fr 1fr}}
+fieldset{border:1.5px solid #e0d3c8;border-radius:10px;padding:.8rem .9rem}
+legend{font-weight:600;font-size:.88rem;padding:0 .4rem}
+.checks{display:flex;flex-wrap:wrap;gap:.4rem .9rem}
+.checks label{display:inline-flex;flex-direction:row;align-items:center;gap:.45rem;font-weight:500;min-height:40px}
+.checks input{width:19px;height:19px;accent-color:var(--bordeaux)}
+.photos{display:flex;flex-wrap:wrap;gap:.6rem}
+.ph{position:relative;width:90px;height:90px;border-radius:10px;overflow:hidden;border:1px solid #eadfd6}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph button{position:absolute;top:3px;right:3px;width:26px;height:26px;border-radius:50%;border:none;background:rgba(48,39,42,.85);color:#fff;font-size:.85rem;cursor:pointer;line-height:1}
+.addph{width:90px;height:90px;border:2px dashed #d5c5b8;border-radius:10px;background:none;font-size:1.6rem;color:var(--champagne);cursor:pointer}
+.addph:hover{border-color:var(--bordeaux);color:var(--bordeaux)}
+.actions{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+.toast{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);background:var(--anthracite);color:#fff;padding:.8rem 1.3rem;border-radius:999px;font-size:.9rem;box-shadow:0 6px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s;max-width:92vw;text-align:center}
+.toast.on{opacity:1}
+dialog{border:none;border-radius:16px;padding:1.5rem;max-width:460px;width:92vw;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(48,39,42,.5)}
+dialog h2{font-family:'Cormorant Garamond',serif;margin-bottom:.6rem}
+dialog p{font-size:.87rem;color:#6b5f62;margin-bottom:.9rem}
+dialog form{border:none;padding:0}
+.hid{display:none!important}
+h2.sec{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:1.4rem 0 .7rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <img src="/assets/logo-header.webp" alt="" onerror="this.style.display='none'">
+    <div>
+      <h1>Gestionnaire des créations</h1>
+      <p>Nacréa by Cathy · les changements sont en ligne ~2 minutes après l'enregistrement</p>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn btn-s" id="btn-config">⚙︎ Connexion</button>
+  </header>
+
+  <div class="bandeau" id="bandeau">Chargement…</div>
+
+  <!-- ===== VUE LISTE ===== -->
+  <section id="vue-liste">
+    <div class="actions" style="margin-bottom:1rem">
+      <button class="btn btn-p" id="btn-ajouter">＋ Ajouter une création</button>
+    </div>
+    <div class="cartes" id="liste"></div>
+  </section>
+
+  <!-- ===== VUE FORMULAIRE ===== -->
+  <section id="vue-form" class="hid">
+    <h2 class="sec" id="form-titre">Nouvelle création</h2>
+    <form id="form" autocomplete="off">
+      <label>Nom de la création
+        <input type="text" id="f-nom" required maxlength="80" placeholder="Bouquet 9 roses — bordeaux &amp; ivoire">
+      </label>
+      <div class="deux">
+        <label>Prix (€)
+          <input type="number" id="f-prix" required min="1" max="999" step="0.5">
+        </label>
+        <label>Collection
+          <select id="f-collection"></select>
+        </label>
+      </div>
+      <fieldset>
+        <legend>Occasions (plusieurs choix possibles)</legend>
+        <div class="checks" id="f-occasions"></div>
+      </fieldset>
+      <label>Phrase d'accroche <small>1 à 2 phrases, visible sur la boutique et Google</small>
+        <textarea id="f-accroche" required maxlength="180" style="min-height:64px"></textarea>
+      </label>
+      <label>Description complète <small>matières, dimensions, entretien — sauter une ligne entre les paragraphes</small>
+        <textarea id="f-description" required></textarea>
+      </label>
+      <fieldset>
+        <legend>Photos</legend>
+        <div class="photos" id="f-photos"></div>
+        <input type="file" id="f-file" accept="image/*" multiple class="hid">
+        <p style="font-size:.78rem;color:#8a7c80;margin-top:.5rem">Les photos sont automatiquement compressées pour le web. Astuce iPhone : si une photo est refusée, envoyez-la-vous en JPG ou activez Réglages → Appareil photo → Formats → « Le plus compatible ».</p>
+      </fieldset>
+      <div class="deux">
+        <label>Statut
+          <select id="f-statut"></select>
+        </label>
+        <label>Lien de paiement Stripe <small>collez le lien « Payment Link » créé dans Stripe — laissez vide pour « Commander par message »</small>
+          <input type="url" id="f-stripe" placeholder="https://buy.stripe.com/…">
+        </label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="f-perso" checked> Personnalisable (couleurs, texte)</label>
+        <label><input type="checkbox" id="f-coeur"> Coup de cœur (mis en avant sur l'accueil)</label>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn btn-p" id="btn-save">Enregistrer et publier</button>
+        <button type="button" class="btn btn-s" id="btn-annuler">Annuler</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn-danger hid" id="btn-suppr">Supprimer cette création</button>
+      </div>
+    </form>
+  </section>
+
+</div>
+
+<!-- ===== DIALOG CONNEXION ===== -->
+<dialog id="dlg-config">
+  <h2>Connexion GitHub</h2>
+  <p>Le gestionnaire enregistre les créations directement dans le site. Ces informations restent sur cet appareil (rien n'est envoyé ailleurs que chez GitHub).</p>
+  <form method="dialog">
+    <label>Compte GitHub (owner)
+      <input type="text" id="c-owner" placeholder="nacreabycathy">
+    </label>
+    <label>Nom du dépôt (repo)
+      <input type="text" id="c-repo" placeholder="nacreabycathy.github.io">
+    </label>
+    <label>Jeton d'accès (token)
+      <input type="text" id="c-token" placeholder="github_pat_…">
+      <small>Créé une fois avec Léo : accès « Contents » en écriture sur ce dépôt uniquement.</small>
+    </label>
+    <div class="actions">
+      <button class="btn btn-p" id="c-save" value="save">Se connecter</button>
+      <button class="btn btn-s" value="cancel">Fermer</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Gestionnaire Nacréa — SPA vanilla.
+   Deux modes :
+   - local  : lecture de /data/products.json (aperçu, pas d'écriture)
+   - github : lecture/écriture via l'API GitHub (token localStorage)
+   ============================================================ */
+const LS_KEY = "nacrea_admin_v1";
+const PATH_JSON = "data/products.json";
+const BRANCH = "main";
+
+const CFG_DEFAUT = { collections: {}, occasions: {}, statuts: {} };
+let CFG = CFG_DEFAUT;          // config_nacrea.json (labels)
+let CATALOG = { produits: [] };
+let SHA = null;                 // sha GitHub courant de products.json
+let EDIT_SLUG = null;           // slug en cours d'édition (null = création)
+let NEW_PHOTOS = [];            // {name, blob, dataUrl} à uploader
+let PHOTOS = [];                // chemins existants conservés
+
+const $ = (id) => document.getElementById(id);
+const conn = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch { return {}; } };
+const online = () => { const c = conn(); return !!(c.owner && c.repo && c.token); };
+
+function toast(msg, ms = 3200) {
+  const t = $("toast"); t.textContent = msg; t.classList.add("on");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), ms);
+}
+
+/* ---------- API GitHub ---------- */
+function ghHeaders() {
+  return { "Authorization": "Bearer " + conn().token, "Accept": "application/vnd.github+json" };
+}
+function ghUrl(path) {
+  const c = conn();
+  return `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`;
+}
+function b64EncodeUtf8(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+function b64DecodeUtf8(b64) {
+  const bin = atob(b64.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(bin, ch => ch.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+async function ghGetJson() {
+  const r = await fetch(ghUrl(PATH_JSON) + "?ref=" + BRANCH, { headers: ghHeaders() });
+  if (r.status === 401) throw new Error("Jeton invalide ou expiré — ouvrez ⚙︎ Connexion.");
+  if (r.status === 404) throw new Error("data/products.json introuvable dans le dépôt.");
+  if (!r.ok) throw new Error("GitHub a répondu " + r.status);
+  const j = await r.json();
+  SHA = j.sha;
+  return JSON.parse(b64DecodeUtf8(j.content));
+}
+async function ghPut(path, contentB64, message, sha) {
+  const body = { message, content: contentB64, branch: BRANCH };
+  if (sha) body.sha = sha;
+  const r = await fetch(ghUrl(path), { method: "PUT", headers: ghHeaders(), body: JSON.stringify(body) });
+  if (r.status === 409 || r.status === 422) throw new Error("Conflit d'enregistrement — rechargez la page et recommencez.");
+  if (!r.ok) throw new Error("Échec de l'envoi (" + r.status + ")");
+  return r.json();
+}
+async function ghSaveCatalog(message) {
+  const contenu = JSON.stringify(CATALOG, null, 2) + "\n";
+  const res = await ghPut(PATH_JSON, b64EncodeUtf8(contenu), message, SHA);
+  SHA = res.content.sha;
+}
+
+/* ---------- Chargement ---------- */
+async function chargerConfig() {
+  try {
+    if (online()) {
+      const r = await fetch(ghUrl("scripts/config_nacrea.json") + "?ref=" + BRANCH, { headers: ghHeaders() });
+      if (r.ok) { CFG = JSON.parse(b64DecodeUtf8((await r.json()).content)); return; }
+    }
+    const r = await fetch("/scripts/config_nacrea.json");
+    if (r.ok) CFG = await r.json();
+  } catch { /* labels par défaut */ }
+}
+async function chargerCatalogue() {
+  if (online()) {
+    CATALOG = await ghGetJson();
+  } else {
+    const r = await fetch("/" + PATH_JSON);
+    if (!r.ok) throw new Error("Impossible de lire " + PATH_JSON);
+    CATALOG = await r.json();
+  }
+}
+
+/* ---------- Rendu ---------- */
+function bandeau() {
+  const b = $("bandeau");
+  if (online()) {
+    const c = conn();
+    b.className = "bandeau ok";
+    b.innerHTML = `Connecté à <b>${c.owner}/${c.repo}</b> — vos enregistrements sont publiés automatiquement.`;
+  } else {
+    b.className = "bandeau";
+    b.innerHTML = `<b>Mode aperçu.</b> Pour enregistrer des créations, cliquez sur ⚙︎ Connexion et collez le jeton préparé avec Léo.`;
+  }
+}
+function labelOf(map, k) { return (CFG[map] && CFG[map][k]) || k; }
+function renderListe() {
+  const el = $("liste");
+  const ps = CATALOG.produits || [];
+  if (!ps.length) { el.innerHTML = "<p>Aucune création pour le moment. Ajoutez la première !</p>"; return; }
+  el.innerHTML = ps.map(p => `
+    <div class="cprod">
+      <img src="/${(p.photos && p.photos[0]) || ""}" alt="" onerror="this.style.visibility='hidden'">
+      <div class="inf">
+        <b>${esc(p.nom)}</b>
+        <span>${esc(labelOf("collections", p.collection))}</span><br>
+        <span class="tag ${p.statut === "epuise" ? "off" : ""}">${esc(labelOf("statuts", p.statut))}</span>
+        ${p.coup_de_coeur ? '<span class="tag">♥ coup de cœur</span>' : ""}
+      </div>
+      <div class="prix">${p.prix} €</div>
+      <button class="btn btn-s" data-edit="${esc(p.slug)}">Modifier</button>
+    </div>`).join("");
+  el.querySelectorAll("[data-edit]").forEach(b =>
+    b.addEventListener("click", () => ouvrirForm(b.dataset.edit)));
+}
+function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
+
+/* ---------- Formulaire ---------- */
+function remplirSelects() {
+  $("f-collection").innerHTML = Object.entries(CFG.collections || {})
+    .map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  $("f-statut").innerHTML = Object.entries(CFG.statuts || {})
+    .map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  $("f-occasions").innerHTML = Object.entries(CFG.occasions || {})
+    .map(([k, v]) => `<label><input type="checkbox" value="${k}"> ${esc(v)}</label>`).join("");
+}
+function slugify(s) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+}
+function renderPhotos() {
+  const zone = $("f-photos");
+  const vign = PHOTOS.map((p, i) =>
+    `<div class="ph"><img src="/${esc(p)}"><button type="button" data-rmold="${i}" aria-label="Retirer">✕</button></div>`)
+    .concat(NEW_PHOTOS.map((n, i) =>
+      `<div class="ph"><img src="${n.dataUrl}"><button type="button" data-rmnew="${i}" aria-label="Retirer">✕</button></div>`));
+  zone.innerHTML = vign.join("") + `<button type="button" class="addph" id="btn-addph" aria-label="Ajouter une photo">＋</button>`;
+  $("btn-addph").addEventListener("click", () => $("f-file").click());
+  zone.querySelectorAll("[data-rmold]").forEach(b => b.addEventListener("click", () => { PHOTOS.splice(+b.dataset.rmold, 1); renderPhotos(); }));
+  zone.querySelectorAll("[data-rmnew]").forEach(b => b.addEventListener("click", () => { NEW_PHOTOS.splice(+b.dataset.rmnew, 1); renderPhotos(); }));
+}
+function ouvrirForm(slug) {
+  EDIT_SLUG = slug || null;
+  NEW_PHOTOS = [];
+  const p = slug ? CATALOG.produits.find(x => x.slug === slug) : null;
+  $("form-titre").textContent = p ? "Modifier : " + p.nom : "Nouvelle création";
+  $("btn-suppr").classList.toggle("hid", !p);
+  $("f-nom").value = p ? p.nom : "";
+  $("f-prix").value = p ? p.prix : "";
+  $("f-collection").value = p ? p.collection : Object.keys(CFG.collections)[0];
+  $("f-statut").value = p ? p.statut : "sur-commande";
+  $("f-accroche").value = p ? p.accroche : "";
+  $("f-description").value = p ? p.description : "";
+  $("f-stripe").value = p ? (p.stripe_url || "") : "";
+  $("f-perso").checked = p ? !!p.personnalisable : true;
+  $("f-coeur").checked = p ? !!p.coup_de_coeur : false;
+  $("f-occasions").querySelectorAll("input").forEach(c => c.checked = p ? p.occasions.includes(c.value) : false);
+  PHOTOS = p ? [...p.photos] : [];
+  renderPhotos();
+  $("vue-liste").classList.add("hid");
+  $("vue-form").classList.remove("hid");
+  window.scrollTo(0, 0);
+}
+function fermerForm() {
+  $("vue-form").classList.add("hid");
+  $("vue-liste").classList.remove("hid");
+}
+
+/* ---------- Compression photo (WebP, fallback JPEG) ---------- */
+async function compresser(file) {
+  let bmp;
+  try { bmp = await createImageBitmap(file); }
+  catch { throw new Error(`« ${file.name} » n'est pas lisible par ce navigateur (photo HEIC ?). Envoyez-la en JPG.`); }
+  const MAX = 1400;
+  const ratio = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
+  const cv = document.createElement("canvas");
+  cv.width = Math.round(bmp.width * ratio); cv.height = Math.round(bmp.height * ratio);
+  cv.getContext("2d").drawImage(bmp, 0, 0, cv.width, cv.height);
+  let blob = await new Promise(res => cv.toBlob(res, "image/webp", 0.85));
+  let ext = "webp";
+  if (!blob) { blob = await new Promise(res => cv.toBlob(res, "image/jpeg", 0.85)); ext = "jpg"; }
+  const dataUrl = await new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(blob); });
+  return { blob, dataUrl, ext };
+}
+$("f-file").addEventListener("change", async (ev) => {
+  for (const file of ev.target.files) {
+    try {
+      const { blob, dataUrl, ext } = await compresser(file);
+      NEW_PHOTOS.push({ blob, dataUrl, ext });
+    } catch (e) { alert(e.message); }
+  }
+  ev.target.value = "";
+  renderPhotos();
+});
+
+/* ---------- Enregistrement ---------- */
+$("form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  if (!online()) { $("dlg-config").showModal(); return; }
+  const occasions = [...$("f-occasions").querySelectorAll("input:checked")].map(c => c.value);
+  if (!occasions.length) { alert("Choisissez au moins une occasion."); return; }
+  if (!PHOTOS.length && !NEW_PHOTOS.length) { alert("Ajoutez au moins une photo."); return; }
+
+  const btn = $("btn-save"); btn.disabled = true; btn.textContent = "Publication…";
+  try {
+    const nom = $("f-nom").value.trim();
+    const slug = EDIT_SLUG || uniqueSlug(slugify(nom));
+
+    // 1. Upload des nouvelles photos
+    for (let i = 0; i < NEW_PHOTOS.length; i++) {
+      const n = NEW_PHOTOS[i];
+      const chemin = `assets/produits/${slug}-${Date.now()}-${i + 1}.${n.ext}`;
+      const b64 = n.dataUrl.split(",")[1];
+      toast(`Envoi de la photo ${i + 1}/${NEW_PHOTOS.length}…`, 8000);
+      await ghPut(chemin, b64, `photo : ${chemin}`);
+      PHOTOS.push(chemin);
+    }
+
+    // 2. Mise à jour du catalogue
+    const produit = {
+      slug, nom,
+      prix: parseFloat($("f-prix").value),
+      collection: $("f-collection").value,
+      occasions,
+      accroche: $("f-accroche").value.trim(),
+      description: $("f-description").value.trim(),
+      photos: PHOTOS,
+      stripe_url: $("f-stripe").value.trim(),
+      statut: $("f-statut").value,
+      personnalisable: $("f-perso").checked,
+      coup_de_coeur: $("f-coeur").checked,
+      ajoute_le: (EDIT_SLUG && (CATALOG.produits.find(x => x.slug === EDIT_SLUG) || {}).ajoute_le) || new Date().toISOString().slice(0, 10),
+    };
+    const idx = CATALOG.produits.findIndex(x => x.slug === slug);
+    if (idx >= 0) CATALOG.produits[idx] = produit; else CATALOG.produits.unshift(produit);
+    await ghSaveCatalog((idx >= 0 ? "modif" : "ajout") + " : " + nom);
+
+    toast("Enregistré ! La création sera en ligne dans ~2 minutes ✓", 6000);
+    fermerForm(); renderListe();
+  } catch (e) {
+    alert("Erreur : " + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = "Enregistrer et publier";
+  }
+});
+function uniqueSlug(base) {
+  let s = base || "creation", i = 2;
+  while (CATALOG.produits.some(p => p.slug === s)) s = base + "-" + i++;
+  return s;
+}
+
+/* ---------- Suppression ---------- */
+$("btn-suppr").addEventListener("click", async () => {
+  const p = CATALOG.produits.find(x => x.slug === EDIT_SLUG);
+  if (!p) return;
+  if (!confirm(`Supprimer « ${p.nom} » ? La fiche sera retirée du site.`)) return;
+  try {
+    CATALOG.produits = CATALOG.produits.filter(x => x.slug !== EDIT_SLUG);
+    await ghSaveCatalog("suppression : " + p.nom);
+    toast("Création supprimée. Mise à jour du site dans ~2 minutes ✓", 5000);
+    fermerForm(); renderListe();
+  } catch (e) { alert("Erreur : " + e.message); }
+});
+
+/* ---------- Connexion ---------- */
+$("btn-config").addEventListener("click", () => {
+  const c = conn();
+  const def = (v) => (v && v[0] !== "[") ? v : "";
+  $("c-owner").value = c.owner || def(CFG.github_owner);
+  $("c-repo").value = c.repo || def(CFG.github_repo);
+  $("c-token").value = c.token || "";
+  $("dlg-config").showModal();
+});
+$("c-save").addEventListener("click", async () => {
+  const c = { owner: $("c-owner").value.trim(), repo: $("c-repo").value.trim(), token: $("c-token").value.trim() };
+  localStorage.setItem(LS_KEY, JSON.stringify(c));
+  if (online()) {
+    try { await chargerCatalogue(); await chargerConfig(); remplirSelects(); toast("Connexion réussie ✓"); }
+    catch (e) { toast("Connexion impossible : " + e.message, 6000); }
+  }
+  bandeau(); renderListe();
+});
+
+/* ---------- Init ---------- */
+$("btn-ajouter").addEventListener("click", () => ouvrirForm(null));
+$("btn-annuler").addEventListener("click", fermerForm);
+(async function init() {
+  bandeau();
+  try {
+    await chargerConfig();
+    remplirSelects();
+    await chargerCatalogue();
+    renderListe();
+  } catch (e) {
+    $("liste").innerHTML = "<p>" + esc(e.message) + "</p>";
+  }
+})();
+</script>
+</body>
+</html>

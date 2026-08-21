@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /merci.html
+Disallow: /merci-commande.html
+Sitemap: https://nacreabycathy.fr/sitemap.xml

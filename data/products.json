@@ -1,0 +1,65 @@
+{
+  "_note": "Catalogue Nacréa by Cathy. Modifié par le gestionnaire /admin/ ou à la main. PRIX D'EXEMPLE à remplacer par les vrais tarifs de Cathy.",
+  "produits": [
+    {
+      "slug": "bouquet-7-roses-rose-poudre-ivoire",
+      "nom": "Bouquet 7 roses — rose poudré & ivoire",
+      "prix": 35,
+      "collection": "bouquets-satin",
+      "occasions": ["anniversaire", "fete-des-meres", "pour-faire-plaisir"],
+      "accroche": "Sept roses en satin roulées à la main, rehaussées d'un papillon doré et d'une couronne strass.",
+      "description": "Chaque rose est façonnée une à une dans un ruban de satin, puis assemblée en dôme dans son emballage à liseré doré. Le bouquet se garde tel quel, sans eau et sans entretien : un souvenir qui ne fane pas.\n\nDimensions : environ 25 cm de diamètre. Satin, papillon métallique, couronne strass, emballage cartonné.",
+      "photos": ["assets/produits/bouquet-rose-poudre-ivoire-1.webp"],
+      "stripe_url": "",
+      "statut": "sur-commande",
+      "personnalisable": true,
+      "coup_de_coeur": true,
+      "ajoute_le": "2026-08-21"
+    },
+    {
+      "slug": "bouquet-7-roses-fuchsia-rose",
+      "nom": "Bouquet 7 roses — fuchsia & rose",
+      "prix": 35,
+      "collection": "bouquets-satin",
+      "occasions": ["saint-valentin", "anniversaire", "pour-faire-plaisir"],
+      "accroche": "Un dégradé de roses éclatant, deux papillons argentés, pour une déclaration qui reste.",
+      "description": "Sept roses en satin fuchsia et rose pâle, roulées à la main et montées en dôme dans un emballage rose poudré à liseré. Les couleurs peuvent être adaptées à la personne qui le recevra.\n\nDimensions : environ 25 cm de diamètre. Satin, papillons métalliques, emballage cartonné.",
+      "photos": ["assets/produits/bouquet-fuchsia-rose-1.webp"],
+      "stripe_url": "",
+      "statut": "sur-commande",
+      "personnalisable": true,
+      "coup_de_coeur": true,
+      "ajoute_le": "2026-08-21"
+    },
+    {
+      "slug": "bougie-caramel-beurre-sale",
+      "nom": "Bougie caramel beurre salé — rose en cire",
+      "prix": 15,
+      "collection": "bougies-fondants",
+      "occasions": ["pour-faire-plaisir", "anniversaire"],
+      "accroche": "Cire végétale de soja coulée à la main, rose en cire dorée et paillettes en surface.",
+      "description": "Une bougie parfumée caramel beurre salé dans son pot doré, coulée à la main en cire végétale de soja. La rose en cire moulée et les paillettes en font un petit cadeau prêt à offrir.\n\nCire végétale de soja. Ne jamais laisser une bougie allumée sans surveillance.",
+      "photos": ["assets/produits/bougie-caramel-beurre-sale-1.webp"],
+      "stripe_url": "",
+      "statut": "sur-commande",
+      "personnalisable": true,
+      "coup_de_coeur": false,
+      "ajoute_le": "2026-08-21"
+    },
+    {
+      "slug": "bouquet-lys-fil-chenille-rouge-blanc",
+      "nom": "Bouquet de lys en fil chenille — rouge & blanc",
+      "prix": 40,
+      "collection": "fleurs-chenille",
+      "occasions": ["fete-des-meres", "anniversaire", "pour-faire-plaisir"],
+      "accroche": "Des lys sculptés tige par tige en fil chenille, à disposer en vase comme un vrai bouquet.",
+      "description": "Chaque lys est sculpté à la main en fil chenille, pétale par pétale, avec ses boutons et son feuillage. Un bouquet à composer en vase, qui garde son volume et ses couleurs pour toujours.\n\nTiges d'environ 35 cm. Fil chenille, pistils.",
+      "photos": ["assets/produits/bouquet-lys-chenille-1.webp"],
+      "stripe_url": "",
+      "statut": "sur-commande",
+      "personnalisable": true,
+      "coup_de_coeur": true,
+      "ajoute_le": "2026-08-21"
+    }
+  ]
+}

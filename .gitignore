@@ -1,0 +1,6 @@
+.DS_Store
+*_DS_Store
+assets/_src/
+.env
+*.pyc
+__pycache__/

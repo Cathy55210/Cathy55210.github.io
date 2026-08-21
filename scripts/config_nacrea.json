@@ -1,0 +1,41 @@
+{
+  "marque": "Nacréa by Cathy",
+  "baseline": "Bougies & créations florales faites main",
+  "domaine": "https://nacreabycathy.fr",
+  "ville": "Vigneulles-lès-Hattonchâtel",
+  "departement": "Meuse",
+  "email": "[EMAIL À CONFIGURER]",
+  "instagram": "https://www.instagram.com/catcandle55",
+  "tiktok": "https://www.tiktok.com/@catcandle55",
+  "facebook": "https://www.facebook.com/share/1Giaos61ck/",
+  "github_owner": "Cathy55210",
+  "github_repo": "Cathy55210.github.io",
+  "couleurs": {
+    "ivoire": "#FFF9F4",
+    "rose": "#E8C5CD",
+    "bordeaux": "#771D36",
+    "bordeaux_fonce": "#5E1729",
+    "champagne": "#C6A46D",
+    "anthracite": "#30272A"
+  },
+  "collections": {
+    "bouquets-satin": "Bouquets en satin",
+    "fleurs-chenille": "Fleurs en chenille",
+    "bougies-fondants": "Bougies & fondants",
+    "coffrets": "Coffrets cadeaux"
+  },
+  "occasions": {
+    "saint-valentin": "Saint-Valentin",
+    "fete-des-meres": "Fête des mères",
+    "anniversaire": "Anniversaire",
+    "anniversaire-mariage": "Anniversaire de mariage",
+    "naissance": "Naissance",
+    "mariage": "Mariage",
+    "pour-faire-plaisir": "Pour faire plaisir"
+  },
+  "statuts": {
+    "disponible": "Disponible",
+    "sur-commande": "Sur commande",
+    "epuise": "Épuisé"
+  }
+}

@@ -1,0 +1,142 @@
+/* ============================================================
+   Nacréa by Cathy — styles globaux v1 (charte 21/08/2026)
+   Mobile-first. Variables charte en :root.
+   ============================================================ */
+:root {
+  --ivoire: #FFF9F4;
+  --rose: #E8C5CD;
+  --bordeaux: #771D36;
+  --bordeaux-fonce: #5E1729;
+  --champagne: #C6A46D;
+  --anthracite: #30272A;
+  --fs-h1: clamp(1.7rem, 5vw, 2.8rem);
+  --fs-h2: clamp(1.3rem, 3.5vw, 2rem);
+  --fs-body: clamp(0.95rem, 2vw, 1.05rem);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--ivoire);
+  color: var(--anthracite);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.65;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--bordeaux); }
+h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; line-height: 1.15; }
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+
+/* ---------- Header ---------- */
+.site-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .6rem 1rem; gap: 1rem;
+  border-bottom: 1px solid #eadfd6;
+  background: var(--ivoire);
+}
+.site-header img { width: 64px; height: auto; }
+.site-header nav { display: flex; gap: .3rem .9rem; flex-wrap: wrap; justify-content: flex-end; }
+.site-header nav a {
+  text-decoration: none; color: var(--anthracite);
+  font-weight: 600; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+  padding: .55rem .35rem; min-height: 44px; display: inline-flex; align-items: center;
+}
+.site-header nav a:hover { color: var(--bordeaux); }
+@media (min-width: 768px) { .site-header { padding: .8rem 2rem; } .site-header img { width: 78px; } }
+
+/* ---------- Boutons & badges ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: .7rem 1.6rem;
+  border-radius: 999px; text-decoration: none;
+  font-weight: 700; font-size: .95rem;
+  transition: background .2s ease, transform .15s ease;
+}
+.btn-primary { background: var(--bordeaux); color: var(--ivoire); }
+.btn-primary:hover { background: var(--bordeaux-fonce); transform: translateY(-1px); }
+.btn-off { background: #d9d0ca; color: #6b5f62; cursor: not-allowed; }
+.badge {
+  position: absolute; top: .7rem; left: .7rem;
+  background: var(--ivoire); color: var(--bordeaux);
+  font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: .25rem .6rem; border-radius: 999px; border: 1px solid var(--rose);
+}
+.badge-off { background: var(--anthracite); color: var(--ivoire); border-color: var(--anthracite); }
+
+/* ---------- Grille produits / cartes ---------- */
+.grille-produits {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: .9rem;
+}
+@media (min-width: 768px) { .grille-produits { grid-template-columns: repeat(3, 1fr); gap: 1.4rem; } }
+.carte-produit { text-decoration: none; color: inherit; }
+.carte-img {
+  position: relative; overflow: hidden; border-radius: 14px;
+  aspect-ratio: 1 / 1; background: #f4ebe3;
+}
+.carte-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.carte-produit:hover .carte-img img { transform: scale(1.04); }
+.carte-produit h3 {
+  font-family: 'Manrope', sans-serif; font-size: .92rem; font-weight: 600;
+  margin: .55rem 0 .1rem; line-height: 1.35;
+}
+.carte-prix { color: var(--bordeaux); font-weight: 700; font-size: .95rem; }
+
+/* ---------- Page boutique ---------- */
+.page-boutique { max-width: 1120px; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
+.page-boutique h1 { margin-bottom: .3rem; }
+.page-boutique .intro { color: #6b5f62; max-width: 640px; margin-bottom: 1.4rem; }
+.filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .7rem; }
+.filtres-occ { margin-bottom: 1.6rem; }
+.chip {
+  border: 1px solid #e0d3c8; background: #fff; color: var(--anthracite);
+  padding: .5rem 1rem; min-height: 40px; border-radius: 999px;
+  font-family: inherit; font-size: .85rem; font-weight: 600; cursor: pointer;
+  transition: all .15s ease;
+}
+.chip:hover { border-color: var(--bordeaux); }
+.chip-active { background: var(--bordeaux); color: var(--ivoire); border-color: var(--bordeaux); }
+.chip-occ { border-style: dashed; }
+.vide { padding: 2rem 0; color: #6b5f62; }
+
+/* ---------- Fiche produit ---------- */
+.page-produit { max-width: 1120px; margin: 0 auto; padding: 1.2rem 1rem 4rem; }
+.fil { font-size: .82rem; color: #8a7c80; margin-bottom: 1rem; }
+.fil a { color: inherit; }
+.produit-grille { display: grid; gap: 1.6rem; }
+@media (min-width: 900px) { .produit-grille { grid-template-columns: 1.1fr 1fr; gap: 3rem; } }
+.galerie img#galerie-main { border-radius: 16px; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.galerie-thumbs { display: flex; gap: .6rem; margin-top: .7rem; }
+.galerie-thumbs .thumb { border: 2px solid transparent; border-radius: 10px; overflow: hidden; padding: 0; cursor: pointer; background: none; }
+.galerie-thumbs .thumb:hover { border-color: var(--champagne); }
+.galerie-thumbs img { width: 72px; height: 72px; object-fit: cover; }
+.infos h1 { margin-bottom: .4rem; }
+.infos .prix { font-size: 1.5rem; font-weight: 700; color: var(--bordeaux); margin-bottom: .7rem; }
+.infos .accroche { color: #6b5f62; margin-bottom: 1.2rem; max-width: 46ch; }
+.perso-note { margin-top: 1rem; font-size: .9rem; background: #fff; border: 1px solid var(--rose); border-radius: 10px; padding: .8rem 1rem; }
+.reassurance { list-style: none; margin-top: 1.4rem; display: grid; gap: .45rem; }
+.reassurance li { padding-left: 1.5rem; position: relative; font-size: .92rem; }
+.reassurance li::before {
+  content: ""; position: absolute; left: 0; top: .5em;
+  width: 14px; height: 2px; background: var(--champagne);
+}
+.produit-description { max-width: 720px; margin-top: 3rem; }
+.produit-description h2 { margin-bottom: .7rem; }
+.produit-description p { margin-bottom: .8rem; }
+.occasions-tags { color: #8a7c80; font-size: .88rem; }
+.cross-sell { margin-top: 3rem; }
+.cross-sell h2 { margin-bottom: 1rem; }
+.cross-sell .grille-produits { grid-template-columns: repeat(2, 1fr); max-width: 560px; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 2rem; padding: 2.2rem 1rem 1.6rem;
+  background: var(--anthracite); color: var(--ivoire);
+  text-align: center;
+}
+.footer-baseline { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: var(--rose); margin-bottom: 1rem; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; justify-content: center; margin-bottom: 1.4rem; }
+.site-footer nav a { color: var(--ivoire); opacity: .85; text-decoration: none; font-size: .85rem; min-height: 44px; display: inline-flex; align-items: center; }
+.site-footer nav a:hover { opacity: 1; color: var(--rose); }
+.footer-credit a { color: var(--ivoire); opacity: .6; font-size: .78rem; text-decoration: none; }
+.footer-credit a:hover { opacity: .9; }
+.footer-credit strong { color: var(--champagne); }
