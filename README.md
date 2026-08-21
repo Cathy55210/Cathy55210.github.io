@@ -11,10 +11,12 @@ scripts/generate_site.py    ← génère creation/*.html, boutique.html, sitemap
 .github/workflows/rebuild.yml ← régénère automatiquement à chaque changement du catalogue
 ```
 
-1. Cathy ouvre `nacreabycathy.fr/admin/`, remplit le formulaire (photos comprises,
-   compressées automatiquement en WebP dans le navigateur).
-2. Le gestionnaire pousse les photos et `data/products.json` dans ce dépôt via
-   l'API GitHub (jeton d'accès limité à ce dépôt, stocké uniquement sur son appareil).
+1. Cathy ouvre `/admin/`, se connecte avec **identifiant + mot de passe**. Le mot de
+   passe déverrouille dans le navigateur un jeton GitHub chiffré (`admin/auth.json`,
+   AES-256-GCM, clé PBKDF2-SHA256 600 000 itérations) — elle ne voit jamais le jeton.
+2. Elle remplit le formulaire (photos comprises, compressées automatiquement en WebP
+   dans le navigateur) ; le gestionnaire pousse photos et `data/products.json` dans
+   ce dépôt via l'API GitHub.
 3. La GitHub Action régénère les fiches produit, la boutique et le sitemap.
 4. GitHub Pages redéploie. En ligne en ~2 minutes.
 
@@ -28,13 +30,13 @@ python3 -m http.server 4177          # prévisualiser sur http://localhost:4177
 Ne jamais éditer à la main : `creation/*.html`, `boutique.html`, `sitemap.xml` (générés).
 Config client (nom, domaine, collections, occasions) : `scripts/config_nacrea.json`.
 
-## Mise en service du gestionnaire (à faire une fois, avec le compte de Cathy)
+## Gestion des accès du gestionnaire
 
-1. GitHub → Settings → Developer settings → Fine-grained personal access tokens →
-   Generate new token : accès **à ce dépôt uniquement**, permission **Contents : Read and write**,
-   expiration 1 an.
-2. Ouvrir `/admin/` → ⚙︎ Connexion → renseigner compte, dépôt, jeton.
-3. Le jeton reste dans le navigateur de Cathy (localStorage). Ne jamais le committer.
+- Connexion : identifiant + mot de passe (transmis à la cliente hors repo).
+- Changer le mot de passe ou le jeton sous-jacent : `python3 scripts/set_admin_password.py`
+  (nécessite `gh` connecté au compte propriétaire), puis committer `admin/auth.json`.
+- `admin/auth.json` est un coffre chiffré : sa présence dans le repo public est voulue.
+  Le mot de passe, lui, ne doit JAMAIS apparaître dans le repo.
 
 ## À venir (chantiers suivants)
 

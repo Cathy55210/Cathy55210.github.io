@@ -78,7 +78,7 @@ h2.sec{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:1.4rem 0 
       <p>Nacréa by Cathy · les changements sont en ligne ~2 minutes après l'enregistrement</p>
     </div>
     <div class="spacer"></div>
-    <button class="btn btn-s" id="btn-config">⚙︎ Connexion</button>
+    <button class="btn btn-s" id="btn-config">Se connecter</button>
   </header>
 
   <div class="bandeau" id="bandeau">Chargement…</div>
@@ -147,22 +147,18 @@ h2.sec{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:1.4rem 0 
 
 <!-- ===== DIALOG CONNEXION ===== -->
 <dialog id="dlg-config">
-  <h2>Connexion GitHub</h2>
-  <p>Le gestionnaire enregistre les créations directement dans le site. Ces informations restent sur cet appareil (rien n'est envoyé ailleurs que chez GitHub).</p>
-  <form method="dialog">
-    <label>Compte GitHub (owner)
-      <input type="text" id="c-owner" placeholder="nacreabycathy">
+  <h2>Connexion</h2>
+  <p>Entrez vos identifiants pour pouvoir enregistrer et publier vos créations.</p>
+  <form>
+    <label>Identifiant
+      <input type="text" id="c-user" autocomplete="username" autocapitalize="none">
     </label>
-    <label>Nom du dépôt (repo)
-      <input type="text" id="c-repo" placeholder="nacreabycathy.github.io">
-    </label>
-    <label>Jeton d'accès (token)
-      <input type="text" id="c-token" placeholder="github_pat_…">
-      <small>Créé une fois avec Léo : accès « Contents » en écriture sur ce dépôt uniquement.</small>
+    <label>Mot de passe
+      <input type="password" id="c-pass" autocomplete="current-password">
     </label>
     <div class="actions">
-      <button class="btn btn-p" id="c-save" value="save">Se connecter</button>
-      <button class="btn btn-s" value="cancel">Fermer</button>
+      <button type="submit" class="btn btn-p" id="c-save">Se connecter</button>
+      <button type="button" class="btn btn-s" id="c-close">Fermer</button>
     </div>
   </form>
 </dialog>
@@ -264,12 +260,13 @@ async function chargerCatalogue() {
 function bandeau() {
   const b = $("bandeau");
   if (online()) {
-    const c = conn();
     b.className = "bandeau ok";
-    b.innerHTML = `Connecté à <b>${c.owner}/${c.repo}</b> — vos enregistrements sont publiés automatiquement.`;
+    b.innerHTML = `<b>Session ouverte</b> — vos enregistrements sont publiés automatiquement sur le site.`;
+    $("btn-config").textContent = "⏻ Déconnexion";
   } else {
     b.className = "bandeau";
-    b.innerHTML = `<b>Mode aperçu.</b> Pour enregistrer des créations, cliquez sur ⚙︎ Connexion et collez le jeton préparé avec Léo.`;
+    b.innerHTML = `<b>Mode aperçu.</b> Pour ajouter ou modifier des créations, cliquez sur « Se connecter » (identifiant + mot de passe).`;
+    $("btn-config").textContent = "Se connecter";
   }
 }
 function labelOf(map, k) { return (CFG[map] && CFG[map][k]) || k; }
@@ -441,23 +438,57 @@ $("btn-suppr").addEventListener("click", async () => {
   } catch (e) { alert("Erreur : " + e.message); }
 });
 
-/* ---------- Connexion ---------- */
+/* ---------- Connexion (identifiant + mot de passe) ----------
+   Le mot de passe déverrouille un jeton chiffré (admin/auth.json,
+   AES-256-GCM, clé dérivée PBKDF2-SHA256 600 000 itérations).
+   Le jeton déchiffré reste sur cet appareil (localStorage).      */
+async function login(user, pass) {
+  const r = await fetch("auth.json", { cache: "no-store" });
+  if (!r.ok) throw new Error("Coffre d'accès introuvable (auth.json)");
+  const b = await r.json();
+  const dec = (s) => Uint8Array.from(atob(s), ch => ch.charCodeAt(0));
+  const keyMat = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(user.trim().toLowerCase() + ":" + pass),
+    "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: dec(b.salt), iterations: b.iter, hash: "SHA-256" },
+    keyMat, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  let plain;
+  try {
+    plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: dec(b.iv) }, key, dec(b.data));
+  } catch { throw new Error("Identifiant ou mot de passe incorrect"); }
+  const creds = JSON.parse(new TextDecoder().decode(plain));
+  localStorage.setItem(LS_KEY, JSON.stringify(creds));
+  return creds;
+}
 $("btn-config").addEventListener("click", () => {
-  const c = conn();
-  const def = (v) => (v && v[0] !== "[") ? v : "";
-  $("c-owner").value = c.owner || def(CFG.github_owner);
-  $("c-repo").value = c.repo || def(CFG.github_repo);
-  $("c-token").value = c.token || "";
-  $("dlg-config").showModal();
-});
-$("c-save").addEventListener("click", async () => {
-  const c = { owner: $("c-owner").value.trim(), repo: $("c-repo").value.trim(), token: $("c-token").value.trim() };
-  localStorage.setItem(LS_KEY, JSON.stringify(c));
   if (online()) {
-    try { await chargerCatalogue(); await chargerConfig(); remplirSelects(); toast("Connexion réussie ✓"); }
-    catch (e) { toast("Connexion impossible : " + e.message, 6000); }
+    if (confirm("Se déconnecter de cet appareil ?")) {
+      localStorage.removeItem(LS_KEY);
+      bandeau(); renderListe(); toast("Déconnecté.");
+    }
+    return;
   }
-  bandeau(); renderListe();
+  $("c-pass").value = "";
+  $("dlg-config").showModal();
+  $("c-user").focus();
+});
+$("c-close").addEventListener("click", () => $("dlg-config").close());
+$("dlg-config").querySelector("form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = $("c-save"); btn.disabled = true; btn.textContent = "Vérification…";
+  try {
+    await login($("c-user").value, $("c-pass").value);
+    $("dlg-config").close();
+    await chargerConfig(); remplirSelects();
+    await chargerCatalogue();
+    bandeau(); renderListe();
+    toast("Connexion réussie ✓");
+  } catch (e) {
+    toast(e.message, 5000);
+  } finally {
+    btn.disabled = false; btn.textContent = "Se connecter";
+  }
 });
 
 /* ---------- Init ---------- */
