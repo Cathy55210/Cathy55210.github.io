@@ -117,6 +117,23 @@ h2.sec{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:1.4rem 0 
         <textarea id="f-description" required></textarea>
       </label>
       <fieldset>
+        <legend>Détails de la fiche (facultatif, mais recommandé)</legend>
+        <div class="deux">
+          <label>Dimensions
+            <input type="text" id="f-dimensions" maxlength="120" placeholder="Hauteur 30 cm · diamètre 25 cm">
+          </label>
+          <label>Délai de fabrication
+            <input type="text" id="f-delai" maxlength="120" placeholder="environ 5 jours avant remise ou envoi">
+          </label>
+        </div>
+        <label style="margin-top:1rem">Matières
+          <input type="text" id="f-matieres" maxlength="200" placeholder="Ruban de satin, papillons métalliques, emballage cartonné">
+        </label>
+        <label style="margin-top:1rem">Conseils d'entretien <small>laissez vide pour afficher les conseils standards (fleurs) ou de sécurité (bougies)</small>
+          <textarea id="f-entretien" maxlength="500" style="min-height:64px"></textarea>
+        </label>
+      </fieldset>
+      <fieldset>
         <legend>Photos</legend>
         <div class="photos" id="f-photos"></div>
         <input type="file" id="f-file" accept="image/*" multiple class="hid">
@@ -327,6 +344,10 @@ function ouvrirForm(slug) {
   $("f-statut").value = p ? p.statut : "sur-commande";
   $("f-accroche").value = p ? p.accroche : "";
   $("f-description").value = p ? p.description : "";
+  $("f-dimensions").value = p ? (p.dimensions || "") : "";
+  $("f-delai").value = p ? (p.delai || "") : "";
+  $("f-matieres").value = p ? (p.matieres || "") : "";
+  $("f-entretien").value = p ? (p.entretien || "") : "";
   $("f-stripe").value = p ? (p.stripe_url || "") : "";
   $("f-perso").checked = p ? !!p.personnalisable : true;
   $("f-coeur").checked = p ? !!p.coup_de_coeur : false;
@@ -400,6 +421,10 @@ $("form").addEventListener("submit", async (ev) => {
       occasions,
       accroche: $("f-accroche").value.trim(),
       description: $("f-description").value.trim(),
+      dimensions: $("f-dimensions").value.trim(),
+      delai: $("f-delai").value.trim(),
+      matieres: $("f-matieres").value.trim(),
+      entretien: $("f-entretien").value.trim(),
       photos: PHOTOS,
       stripe_url: $("f-stripe").value.trim(),
       statut: $("f-statut").value,

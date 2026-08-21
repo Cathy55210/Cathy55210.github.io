@@ -159,6 +159,47 @@ def carte(p):
     </a>"""
 
 
+ENTRETIEN_FLORAL = ("Dépoussiérez délicatement de temps en temps, conservez la création à l'abri "
+                    "de l'humidité et évitez une exposition prolongée au soleil direct : elle gardera "
+                    "ses couleurs et son volume très longtemps.")
+SECURITE_BOUGIE = ("Ne laissez jamais une bougie allumée sans surveillance. Placez-la sur une surface "
+                   "stable et résistante à la chaleur, hors de portée des enfants et des animaux, "
+                   "et ne la laissez pas brûler jusqu'au fond du contenant.")
+
+
+def section_details(p):
+    """Bloc « Dans les détails » : affiché uniquement si des données existent."""
+    lignes = ""
+    if p.get("dimensions"):
+        lignes += f"<div><dt>Dimensions</dt><dd>{e(p['dimensions'])}</dd></div>"
+    if p.get("matieres"):
+        lignes += f"<div><dt>Matières</dt><dd>{e(p['matieres'])}</dd></div>"
+    if not lignes:
+        return ""
+    return f"""
+  <section class="produit-bloc">
+    <h2>Dans les détails</h2>
+    <dl class="details-dl">{lignes}</dl>
+    <p class="note-variation">Chaque pièce étant faite main, les dimensions peuvent légèrement varier d'une création à l'autre.</p>
+  </section>"""
+
+
+def section_entretien(p):
+    if p.get("entretien"):
+        titre, texte = "Pour en profiter longtemps", p["entretien"]
+    elif p["collection"] == "bougies-fondants":
+        titre, texte = "Conseils d'utilisation", SECURITE_BOUGIE
+    elif p["collection"] in ("bouquets-satin", "fleurs-chenille", "coffrets"):
+        titre, texte = "Pour en profiter longtemps", ENTRETIEN_FLORAL
+    else:
+        return ""
+    return f"""
+  <section class="produit-bloc">
+    <h2>{e(titre)}</h2>
+    <p>{e(texte)}</p>
+  </section>"""
+
+
 def page_produit(p):
     autres = [q for q in PRODUITS if q["slug"] != p["slug"] and q["collection"] == p["collection"]]
     if len(autres) < 2:
@@ -181,6 +222,10 @@ def page_produit(p):
     paragraphs = "".join(f"<p>{e(par)}</p>" for par in p["description"].split("\n\n"))
 
     labels_occ = ", ".join(CFG["occasions"].get(o, o) for o in p["occasions"])
+    cat_label = CFG["collections"].get(p["collection"], p["collection"])
+    delai = ""
+    if p.get("delai"):
+        delai = f'<p class="delai-note">Fabrication : {e(p["delai"])}</p>'
 
     return f"""{head(p['nom'], p['accroche'], f"/creation/{p['slug']}.html", p['photos'][0], "product")}
   {schema_product(p)}
@@ -189,13 +234,14 @@ def page_produit(p):
 <!-- Page générée automatiquement par scripts/generate_site.py — ne pas éditer à la main -->
 {header_nav()}
 <main class="page-produit">
-  <nav class="fil" aria-label="Fil d'Ariane"><a href="/boutique.html">Boutique</a> › <span>{e(p['nom'])}</span></nav>
+  <nav class="fil" aria-label="Fil d'Ariane"><a href="/">Accueil</a> › <a href="/boutique.html">Boutique</a> › <a href="/boutique.html?collection={p['collection']}">{e(cat_label)}</a> › <span>{e(p['nom'])}</span></nav>
   <div class="produit-grille">
     <section class="galerie">
       <img id="galerie-main" src="/{e(p['photos'][0])}" alt="{e(p['nom'])}" width="900" height="900">
       {thumbs}
     </section>
     <section class="infos">
+      <p class="cat-label">{e(cat_label)}</p>
       <h1>{e(p['nom'])}</h1>
       <p class="prix">{p['prix']} €</p>
       <p class="accroche">{e(p['accroche'])}</p>
@@ -203,6 +249,7 @@ def page_produit(p):
         {bouton_commande(p)}
         {perso}
       </div>
+      {delai}
       <ul class="reassurance">
         <li>Fait main à l'atelier, à {e(CFG['ville'])}</li>
         <li>Envoi soigné partout en France, ou remise en main propre</li>
@@ -211,14 +258,25 @@ def page_produit(p):
     </section>
   </div>
   <section class="produit-description">
-    <h2>La création en détail</h2>
+    <h2>Une attention faite pour rester</h2>
     {paragraphs}
     <p class="occasions-tags">Idéal pour : {e(labels_occ)}.</p>
+  </section>
+  {section_details(p)}
+  {section_entretien(p)}
+  <section class="produit-bloc atelier-fiche">
+    <h2>Créée par Cathy</h2>
+    <p>Chaque création Nacréa est préparée avec attention par Cathy, à Vigneulles-lès-Hattonchâtel, des premières associations de couleurs jusqu'aux derniers détails. Il n'en existe pas deux identiques.</p>
+    <p><a href="/sur-mesure.html">Envie d'une version à vos couleurs ? Décrivez votre idée.</a></p>
   </section>
   <section class="cross-sell">
     <h2>Pour compléter votre attention</h2>
     <div class="grille-produits">{cross}</div>
   </section>
+  <div class="sticky-buy">
+    <span class="sb-prix">{p['prix']} €</span>
+    {bouton_commande(p)}
+  </div>
 </main>
 {footer()}""".replace("</body>\n</html>", """
 <script>

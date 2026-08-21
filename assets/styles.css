@@ -164,7 +164,35 @@ h3 { font-size: var(--fs-h3); }
 .fil { font-size: .82rem; color: #8a7c80; margin-bottom: 1rem; }
 .fil a { color: inherit; }
 .produit-grille { display: grid; gap: 1.6rem; }
-@media (min-width: 900px) { .produit-grille { grid-template-columns: 1.1fr 1fr; gap: 3rem; } }
+@media (min-width: 900px) {
+  .produit-grille { grid-template-columns: 1.15fr 1fr; gap: 3rem; }
+  .produit-grille .infos { position: sticky; top: 100px; align-self: start; }
+}
+.cat-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--champagne); margin-bottom: .35rem;
+}
+.delai-note { margin-top: .9rem; font-size: .88rem; color: #6b5f62; }
+.produit-bloc { max-width: 720px; margin-top: 2.6rem; }
+.produit-bloc h2 { margin-bottom: .7rem; }
+.produit-bloc p { margin-bottom: .6rem; color: #4d4245; }
+.details-dl { display: grid; gap: .7rem; }
+.details-dl dt { font-weight: 700; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--champagne); }
+.details-dl dd { margin: .1rem 0 0; }
+.note-variation { font-size: .84rem; color: #8a7c80; margin-top: .8rem; }
+.atelier-fiche a { font-weight: 600; }
+.sticky-buy {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+  display: none; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .55rem 1rem calc(.55rem + env(safe-area-inset-bottom));
+  background: rgba(255, 249, 244, .95);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-top: 1px solid #eadfd6;
+}
+.sticky-buy.on { display: flex; }
+.sticky-buy .sb-prix { font-weight: 700; font-size: 1.15rem; color: var(--bordeaux); white-space: nowrap; }
+.sticky-buy .btn { min-height: 44px; padding: .55rem 1.2rem; font-size: .88rem; }
+@media (min-width: 900px) { .sticky-buy.on { display: none; } }
 .galerie img#galerie-main { border-radius: 16px; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
 .galerie-thumbs { display: flex; gap: .6rem; margin-top: .7rem; }
 .galerie-thumbs .thumb { border: 2px solid transparent; border-radius: 10px; overflow: hidden; padding: 0; cursor: pointer; background: none; }

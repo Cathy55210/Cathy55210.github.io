@@ -12,6 +12,16 @@
     onScroll();
   }
 
+  // Fiche produit : barre d'achat mobile quand le bouton principal sort de l'écran
+  var stickyBuy = document.querySelector(".sticky-buy");
+  var ctas = document.querySelector(".achat-ctas");
+  if (stickyBuy && ctas && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      var en = entries[0];
+      stickyBuy.classList.toggle("on", !en.isIntersecting && en.boundingClientRect.top < 0);
+    }, { threshold: 0 }).observe(ctas);
+  }
+
   // Fade-up des sections au scroll (désactivé si l'utilisateur préfère réduire les animations)
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
     var sections = document.querySelectorAll("main > section");
