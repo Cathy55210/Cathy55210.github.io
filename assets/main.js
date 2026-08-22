@@ -22,9 +22,18 @@
     }, { threshold: 0 }).observe(ctas);
   }
 
-  // Fade-up des sections au scroll (désactivé si l'utilisateur préfère réduire les animations)
+  // Photos lazy : arrivée en fondu sur le fond nude du placeholder (pas de blanc brutal)
+  document.querySelectorAll(".carte-img img").forEach(function (img) {
+    if (img.complete) return;
+    img.classList.add("img-chargement");
+    img.addEventListener("load", function () { img.classList.remove("img-chargement"); }, { once: true });
+    img.addEventListener("error", function () { img.classList.remove("img-chargement"); }, { once: true });
+  });
+
+  // Fade-up des sections au scroll (désactivé si l'utilisateur préfère réduire les animations).
+  // Le hero est exclu : il a sa propre entrée orchestrée au chargement (Phase 11 §4-5).
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
-    var sections = document.querySelectorAll("main > section");
+    var sections = document.querySelectorAll("main > section:not(.hero)");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {

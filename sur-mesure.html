@@ -203,6 +203,7 @@
         <button type="submit" class="btn btn-primary" id="w-send" hidden>Envoyer mon projet à Cathy</button>
       </div>
       <p class="werror" id="w-error" hidden></p>
+      <p class="wsaved">Vos choix sont enregistrés sur cet appareil : vous pouvez revenir plus tard sans rien perdre.</p>
     </form>
 
     <!-- Fallback sans Formspree : projet à copier -->
@@ -317,8 +318,16 @@
 
   // ---- Navigation ----
   function goTo(n) {
-    step = Math.max(0, Math.min(TOTAL - 1, n));
-    steps.forEach(function (s) { s.hidden = +s.dataset.step !== step; });
+    var cible = Math.max(0, Math.min(TOTAL - 1, n));
+    // L'étape entrante glisse depuis la droite (avancer) ou la gauche (revenir)
+    var entree = cible >= step ? "fs-in" : "fs-in-back";
+    step = cible;
+    steps.forEach(function (s) {
+      var active = +s.dataset.step === step;
+      s.hidden = !active;
+      s.classList.remove("fs-in", "fs-in-back");
+      if (active) s.classList.add(entree);
+    });
     document.querySelectorAll(".wp-dot").forEach(function (d) {
       d.classList.toggle("on", +d.dataset.dot <= step);
     });
@@ -330,14 +339,23 @@
     if (step === TOTAL - 1) recap();
   }
   function erreur(msg) { var e = $("w-error"); e.textContent = msg; e.hidden = false; }
+  // Champ en erreur : bordure rouge doux, effacée dès que la personne corrige
+  function champErreur(id) {
+    var el = $(id);
+    el.classList.add("champ-erreur");
+    el.addEventListener("input", function h() {
+      el.classList.remove("champ-erreur");
+      el.removeEventListener("input", h);
+    });
+  }
   function valide() {
     if (step === 0 && !state.type) { erreur("Choisissez le type de création qui vous fait envie."); return false; }
     if (step === 0 && !state.occasion) { erreur("Et pour quelle occasion ? (« Autre » convient très bien.)"); return false; }
     if (step === 3 && !state.budget) { erreur("Une fourchette de budget aide Cathy à bien dimensionner la création."); return false; }
     if (step === 5) {
-      if (!$("f-prenom").value.trim()) { erreur("Votre prénom est nécessaire pour vous répondre."); return false; }
+      if (!$("f-prenom").value.trim()) { champErreur("f-prenom"); erreur("Votre prénom est nécessaire pour vous répondre."); return false; }
       var em = $("f-email").value.trim();
-      if (!em || em.indexOf("@") < 1) { erreur("Un email valide est nécessaire pour recevoir la proposition de Cathy."); return false; }
+      if (!em || em.indexOf("@") < 1) { champErreur("f-email"); erreur("Vérifiez votre adresse email : elle est nécessaire pour recevoir la proposition de Cathy."); return false; }
     }
     return true;
   }

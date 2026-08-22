@@ -348,7 +348,11 @@ def page_boutique():
     {chips_col}
   </div>
   <div class="grille-produits" id="grille">{cartes}</div>
-  <p class="vide" id="vide" hidden>Aucune création ne correspond à ces filtres pour le moment. <a href="/sur-mesure.html">Demandez-la en sur-mesure !</a></p>
+  <div class="vide" id="vide" hidden>
+    <h2>Aucune création ne correspond exactement à vos choix.</h2>
+    <p>Essayez de retirer un filtre, ou imaginez une création personnalisée avec Cathy : elle adore partir d'une envie précise.</p>
+    <a class="btn btn-primary" href="/sur-mesure.html">Imaginer ma création</a>
+  </div>
 </main>
 {footer()}""".replace("</body>\n</html>", """
 <script>
